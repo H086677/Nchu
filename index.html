@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092c54">
+  <meta name="description" content="南昌航空大学校园人生模拟器——写下名字，选择专业与天赋，开启你的蓝天旅程。">
+  <title>昌航逐梦指南 · 南昌航空大学校园人生</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-plane" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5m6 6-6-6 6-6"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M6.1 7a7 7 0 0 1 11.4-1L20 9M4 15l2.5 3A7 7 0 0 0 18 17"/></symbol>
+    <symbol id="i-dice" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 8h.01M16 8h.01M12 12h.01M8 16h.01M16 16h.01"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></symbol>
+    <symbol id="i-wing" viewBox="0 0 24 24"><path d="M3 17c6-1 9-6 10-13 4 4 4 8 2 11l6-4c-2 7-8 10-18 6Z"/></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 1v3m6-3v3M9 20v3m6-3v3M1 9h3m-3 6h3m16-6h3m-3 6h3M10 10h4v4h-4z"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6m-5 0v6L4 19a1.5 1.5 0 0 0 1 2h14a1.5 1.5 0 0 0 1-2L14 9V3M7 16h10"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 16"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m16 8-3 5-5 3 3-5 5-3Z"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10m6 10V4m6 16v-7m5 7H2"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 14A9 9 0 0 1 10 3.5 9 9 0 1 0 20.5 14Z"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></symbol>
+  </svg>
+
+  <div class="sky" aria-hidden="true"><div class="cloud cloud-one"></div><div class="cloud cloud-two"></div></div>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="返回昌航逐梦指南首页">
+      <span class="brand-mark"><img src="assets/nchu-emblem.png" alt="南昌航空大学校徽" width="90" height="90"></span>
+      <span><strong>南昌航空大学</strong><small>NANCHANG HANGKONG UNIVERSITY</small></span>
+    </a>
+    <button class="theme-button" id="theme-button" type="button" aria-label="切换深色模式" title="切换深浅色主题"><svg><use href="#i-moon"/></svg></button>
+  </header>
+
+  <main>
+    <section class="page start-page active" id="start-page" aria-labelledby="main-title">
+      <div class="start-content">
+        <div class="edition-label"><span></span> CAMPUS LIFE SIMULATOR <span></span></div>
+        <div class="hero-emblem" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><svg><use href="#i-plane"/></svg><i class="star-one">✦</i><i class="star-two">✧</i></div>
+        <p class="university-name">南昌航空大学 · 校园人生模拟器</p>
+        <h1 id="main-title">昌航逐梦指南</h1>
+        <p class="english-title">YOUR FLIGHT, YOUR FUTURE.</p>
+        <div class="title-rule"><span></span><i>✦</i><span></span></div>
+        <p class="intro">从卧龙湖畔，到更辽阔的天空。<br>你的昌航故事，从这里起飞。</p>
+        <form class="name-form" id="name-form">
+          <label for="username">写下你的名字</label>
+          <div class="name-field"><input id="username" name="username" type="text" maxlength="12" placeholder="未来的昌航人，怎么称呼你？" autocomplete="nickname" aria-describedby="name-error"><svg><use href="#i-plane"/></svg></div>
+          <p class="form-error" id="name-error" role="alert"></p>
+          <button class="primary-button" type="submit">开启我的大学旅程<svg><use href="#i-arrow"/></svg></button>
+        </form>
+        <p class="start-note"><svg><use href="#i-spark"/></svg> 每一段青春，都有无限可能</p>
+      </div>
+      <div class="campus-line" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    </section>
+
+    <section class="page selection-page" id="major-page" aria-labelledby="major-title" hidden>
+      <nav class="progress-nav" aria-label="创建角色进度"><button class="back-button" data-back="start" type="button"><svg><use href="#i-back"/></svg> 返回</button><ol><li class="complete"><span><svg><use href="#i-check"/></svg></span>名字</li><li class="current"><span>2</span>专业</li><li><span>3</span>天赋</li></ol><span class="step-count">01 / 02</span></nav>
+      <div class="page-content">
+        <p class="section-eyebrow">CHOOSE YOUR PATH</p><h2 id="major-title">选择你的专业</h2><p class="section-subtitle">每一份热爱，都是通往未来的一张登机牌</p>
+        <div class="major-grid" id="major-grid"></div>
+        <div class="selection-footer"><p id="major-hint">点击专业卡片，继续抽取你的专属天赋</p><button class="primary-button compact" id="major-next" type="button" disabled>下一站：抽取天赋<svg><use href="#i-arrow"/></svg></button></div>
+      </div>
+    </section>
+
+    <section class="page selection-page" id="talent-page" aria-labelledby="talent-title" hidden>
+      <nav class="progress-nav" aria-label="创建角色进度"><button class="back-button" data-back="major" type="button"><svg><use href="#i-back"/></svg> 返回</button><ol><li class="complete"><span><svg><use href="#i-check"/></svg></span>名字</li><li class="complete"><span><svg><use href="#i-check"/></svg></span>专业</li><li class="current"><span>3</span>天赋</li></ol><span class="step-count">02 / 02</span></nav>
+      <div class="page-content talent-content">
+        <p class="section-eyebrow">A LITTLE EXTRA MAGIC</p><h2 id="talent-title">抽取你的初始天赋</h2><p class="section-subtitle">小小的特别之处，将陪你走过四年大学时光</p>
+        <div class="talent-grid" id="talent-grid"></div>
+        <div class="talent-actions"><button class="secondary-button" id="refresh-talents" type="button"><svg><use href="#i-refresh"/></svg>换一批 <span id="refresh-count">2</span></button><button class="secondary-button" id="random-talent" type="button"><svg><use href="#i-dice"/></svg>交给命运</button></div>
+        <button class="primary-button compact" id="talent-next" type="button" disabled>确认天赋，开启旅程<svg><use href="#i-arrow"/></svg></button>
+        <p class="selection-note" id="talent-hint">点击卡片，选择一项与你同行的好运</p>
+      </div>
+    </section>
+
+    <section class="page coming-page" id="coming-page" aria-labelledby="coming-title" hidden>
+      <div class="coming-card"><div class="coming-icon"><svg><use href="#i-lock"/></svg></div><p class="section-eyebrow">TO BE CONTINUED</p><h2 id="coming-title">敬请期待</h2><div class="title-rule"><span></span><i>✦</i><span></span></div><p>你的大学旅程即将启航。<br>更多昌航故事，正在路上。</p><div class="profile-ticket"><span class="ticket-label">PASSENGER</span><strong id="profile-name"></strong><dl><div><dt>专业</dt><dd id="profile-major"></dd></div><div><dt>天赋</dt><dd id="profile-talent"></dd></div></dl><span class="ticket-code">NCHU · CLASS OF 2026</span></div><button class="primary-button" id="restart" type="button">重新启程<svg><use href="#i-refresh"/></svg></button></div>
+    </section>
+  </main>
+  <footer class="site-footer"><span>NCHU · 逐梦蓝天</span><i></i><span>日新自强 · 知行合一</span></footer>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
