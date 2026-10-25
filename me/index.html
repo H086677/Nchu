@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070b16">
+<title>黄锐锋 · 个人主页</title>
+<meta name="description" content="黄锐锋的个人网站 — 音乐盒、人生模拟器与联系方式。">
+<meta property="og:title" content="黄锐锋 · 个人主页">
+<meta property="og:description" content="音乐盒 · 人生模拟器 · 联系方式">
+<meta property="og:image" content="assets/img/avatar.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/img/favicon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="bg" aria-hidden="true">
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+  <div class="orb orb-c"></div>
+  <div class="grid-lines"></div>
+  <div class="stars"></div>
+</div>
+
+<header class="nav" id="nav">
+  <a class="nav-brand" href="#top">
+    <img src="assets/img/avatar.jpg" alt="" class="nav-avatar">
+    <span>黄锐锋</span>
+  </a>
+  <nav class="nav-links" aria-label="页面导航">
+    <a href="#music">音乐盒</a>
+    <a href="#sim">人生模拟器</a>
+    <a href="#contact">联系我</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-avatar reveal">
+        <div class="avatar-ring"></div>
+        <img src="assets/img/avatar.jpg" alt="我的头像" class="avatar-img" width="640" height="640">
+        <span class="avatar-badge" title="在线">♪</span>
+      </div>
+
+      <p class="hero-eyebrow reveal">HELLO, WORLD</p>
+      <h1 class="hero-title reveal">你好，我是<span class="grad">黄锐锋</span></h1>
+      <p class="hero-sub reveal">
+        喜欢写代码、也喜欢听周杰伦。这里是我的小站 ——
+        有能放歌的音乐盒，还有一场随时可以开始的人生。
+      </p>
+
+      <div class="hero-actions reveal">
+        <button class="btn btn-primary" id="heroPlay" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          <span>播放《彩虹》</span>
+        </button>
+        <a class="btn btn-ghost" href="#sim">
+          <span>去玩模拟器</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12m0 0-5-5m5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <ul class="hero-meta reveal">
+        <li><span class="dot"></span>南昌航空大学</li>
+        <li><span class="dot"></span>在校学生</li>
+        <li><span class="dot"></span>周杰伦 · 单曲循环中</li>
+      </ul>
+    </div>
+
+    <a class="scroll-hint" href="#music" aria-label="向下滚动">
+      <span></span>
+    </a>
+  </section>
+
+  <!-- ================= 音乐盒 ================= -->
+  <section class="section" id="music">
+    <div class="section-head reveal">
+      <p class="section-kicker">MUSIC BOX</p>
+      <h2 class="section-title">我的音乐盒</h2>
+      <p class="section-desc">第一首放的是周杰伦《彩虹》。戴上耳机，慢慢听。</p>
+    </div>
+
+    <div class="player reveal" id="player">
+      <div class="player-glow" aria-hidden="true"></div>
+
+      <!-- 左：唱片 -->
+      <div class="player-disc">
+        <div class="disc" id="disc">
+          <img src="assets/img/rainbow-cover.jpg" alt="《彩虹》专辑封面" class="disc-cover" width="400" height="400">
+          <span class="disc-hole"></span>
+        </div>
+        <div class="tonearm" id="tonearm" aria-hidden="true"></div>
+      </div>
+
+      <!-- 右：信息与控制 -->
+      <div class="player-body">
+        <div class="track">
+          <p class="track-label">正在播放</p>
+          <h3 class="track-title" id="trackTitle">彩虹</h3>
+          <p class="track-artist" id="trackArtist">周杰伦 · 我很忙</p>
+        </div>
+
+        <!-- 歌词 -->
+        <div class="lyrics" id="lyrics" role="log" aria-live="polite" aria-label="歌词">
+          <ul id="lyricList"></ul>
+        </div>
+
+        <!-- 进度 -->
+        <div class="progress-wrap">
+          <div class="progress" id="progress" role="slider" tabindex="0"
+               aria-label="播放进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="progress-buf" id="progressBuf"></div>
+            <div class="progress-fill" id="progressFill"><span class="progress-knob"></span></div>
+          </div>
+          <div class="time-row">
+            <span id="timeNow">00:00</span>
+            <span id="timeAll">04:23</span>
+          </div>
+        </div>
+
+        <!-- 按钮 -->
+        <div class="controls">
+          <button class="ctrl" id="btnLoop" type="button" title="单曲循环" aria-label="单曲循环" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
+          </button>
+
+          <button class="ctrl ctrl-main" id="btnPlay" type="button" title="播放/暂停" aria-label="播放">
+            <svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="ico-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+          </button>
+
+          <button class="ctrl" id="btnMute" type="button" title="静音" aria-label="静音" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
+          </button>
+
+          <div class="volume" title="音量">
+            <input type="range" id="volume" min="0" max="100" value="80" aria-label="音量">
+          </div>
+        </div>
+
+        <p class="player-note">
+          <span class="pulse-dot"></span>
+          <span id="playerHint">点击播放按钮开始</span>
+        </p>
+      </div>
+
+      <audio id="audio" preload="metadata" loop>
+        <source src="assets/audio/rainbow.mp3" type="audio/mpeg">
+        你的浏览器不支持音频播放。
+      </audio>
+    </div>
+  </section>
+
+  <!-- ================= 人生模拟器 ================= -->
+  <section class="section" id="sim">
+    <div class="section-head reveal">
+      <p class="section-kicker">LIFE SIMULATOR</p>
+      <h2 class="section-title">人生模拟器</h2>
+      <p class="section-desc">如果人生可以重来一次，你会怎么选？点进去，开始你的另一段大学。</p>
+    </div>
+
+    <a class="sim-card reveal" href="https://h086677.github.io/Nchu/" target="_blank" rel="noopener">
+      <div class="sim-shot">
+        <img src="assets/img/sim-preview.webp" alt="人生模拟器界面预览" loading="lazy" width="1280" height="800">
+        <div class="sim-shot-veil"></div>
+        <span class="sim-play">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </span>
+      </div>
+
+      <div class="sim-info">
+        <div class="sim-badge">
+          <img src="assets/img/nchu-emblem.png" alt="" width="28" height="28">
+          <span>昌航逐梦指南</span>
+        </div>
+        <h3>南昌航空大学 · 校园人生模拟器</h3>
+        <p>
+          从入学到毕业，四年里的每一次选择都会把你推向不同的结局。
+          天赋分配、专业抉择、社团与暗线，都由你决定。
+        </p>
+        <ul class="sim-tags">
+          <li>纯静态</li>
+          <li>零依赖</li>
+          <li>手机可玩</li>
+          <li>多结局</li>
+        </ul>
+        <span class="sim-cta">
+          开始模拟
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12m0 0-5-5m5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </div>
+    </a>
+  </section>
+
+  <!-- ================= 联系 ================= -->
+  <section class="section" id="contact">
+    <div class="section-head reveal">
+      <p class="section-kicker">CONTACT</p>
+      <h2 class="section-title">找到我</h2>
+      <p class="section-desc">想聊天、想合作，或者只是想推荐一首歌，都可以找我。</p>
+    </div>
+
+    <div class="contact-grid">
+      <button class="contact-card reveal" type="button" data-copy="3433046591" data-kind="QQ">
+        <span class="contact-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2c3.3 0 5.5 2.4 5.5 5.6 0 1.3-.2 2.4-.5 3.3.9 1 1.6 2.2 1.6 3.1 0 .7-.5 1.1-1.2 1.1-.5 0-1-.3-1.5-.8-.6 1.2-1.7 2-3.9 2s-3.3-.8-3.9-2c-.5.5-1 .8-1.5.8-.7 0-1.2-.4-1.2-1.1 0-.9.7-2.1 1.6-3.1-.3-.9-.5-2-.5-3.3C6.5 4.4 8.7 2 12 2z"/></svg>
+        </span>
+        <span class="contact-body">
+          <span class="contact-label">QQ</span>
+          <span class="contact-value">3433046591</span>
+        </span>
+        <span class="contact-copy">点击复制</span>
+      </button>
+
+      <button class="contact-card reveal" type="button" data-copy="19314667277" data-kind="电话">
+        <span class="contact-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M6.6 3h3l1.6 4-2 1.6a12 12 0 0 0 5.2 5.2L16 11.8l4 1.6v3c0 1.4-1.2 2.6-2.6 2.4C10.5 18 6 13.5 4.2 5.6 4 4.2 5.2 3 6.6 3z"/></svg>
+        </span>
+        <span class="contact-body">
+          <span class="contact-label">电话</span>
+          <span class="contact-value">193 1466 7277</span>
+        </span>
+        <span class="contact-copy">点击复制</span>
+      </button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <p>© <span id="year">2025</span> 黄锐锋 · 用 HTML / CSS / JS 手写而成</p>
+  <p class="foot-sub">BGM：周杰伦《彩虹》 · 本站托管于 GitHub Pages</p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
