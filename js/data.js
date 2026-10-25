@@ -126,7 +126,43 @@ const TALENTS = [
   { id: 'snack',  rarity: 'R',   icon: 'bowl',    name: '夜宵合伙人',       en: 'Midnight Snack Partner', effects: { 体质: 1 },       desc: '后街炒粉的老板，见你就多抓一把。' },
   { id: 'three',  rarity: 'R',   icon: 'spark',   name: '三分钟热度',       en: 'Three-Minute Flame',  effects: { 求新: 1 },          desc: '但每一次，都真的认真热过那三分钟。' },
   { id: 'map',    rarity: 'R',   icon: 'route',   name: '校园活地图',       en: 'Living Campus Map',   effects: { 笃学: 1 },          desc: '闭着眼睛也能找到任何一间教室。' },
-  { id: 'card',   rarity: 'R',   icon: 'ticket',  name: '捡到校园卡',       en: 'Found Your Card',     effects: { 守正: 1 },          desc: '在田径场捡到过三张，一张不落都还了回去。' }
+  { id: 'card',   rarity: 'R',   icon: 'ticket',  name: '捡到校园卡',       en: 'Found Your Card',     effects: { 守正: 1 },          desc: '在田径场捡到过三张，一张不落都还了回去。' },
+
+  /* —— SSR · 扩充 —— */
+  { id: 'qianhu',  rarity: 'SSR', icon: 'star',    name: '前湖的天赋',       en: 'Born for This',        effects: { 求新: 2, 笃学: 1 }, desc: '有些题目你只是看了一眼，就知道答案该往哪个方向长。老师说这叫天分，你自己觉得只是运气好。' },
+  { id: 'ironhand',rarity: 'SSR', icon: 'weld',    name: '焊枪不抖的手',     en: 'Steady Hand',          effects: { 力行: 2, 体质: 1 }, desc: '一道 0.8 毫米的薄板对接，别人要练三个月，你第三天就焊出了鱼鳞纹。' },
+  { id: 'nightowl',rarity: 'SSR', icon: 'moon',    name: '通宵体质',         en: 'Nocturnal',            effects: { 笃学: 1, 体质: 2 }, desc: '别人熬一夜要缓三天，你熬三夜还能去跑早操。这具身体的电池容量不太正常。' },
+  { id: 'memory',  rarity: 'SSR', icon: 'note',    name: '过目不忘',         en: 'Eidetic Memory',       effects: { 笃学: 3 },          desc: '一整本《空气动力学》的公式表，你翻两遍就能默出来，连页码都对得上。' },
+  { id: 'leader',  rarity: 'SSR', icon: 'medal',   name: '天生的队长',       en: 'Natural Captain',      effects: { 守正: 2, 力行: 1 }, desc: '一群人乱成一锅粥的时候，你开口说三句话，所有人就都知道该干什么了。' },
+  { id: 'luck',    rarity: 'SSR', icon: 'spark',   name: '锦鲤附体',         en: 'Fortune\'s Favorite',  effects: { 求新: 1, 体质: 1 }, desc: '抽签永远抽到好签，补考永远排到最后一排，连食堂打菜都能多一勺肉。' },
+
+  /* —— SR · 扩充 —— */
+  { id: 'tape',    rarity: 'SR',  icon: 'tool',    name: '绝缘胶带大师',     en: 'Duct Tape Master',     effects: { 力行: 1, 求新: 1 }, desc: '实验室里没有什么是胶带解决不了的，如果有，就再缠两圈。' },
+  { id: 'ppt',     rarity: 'SR',  icon: 'chart',   name: 'PPT 圣手',         en: 'Slide Wizard',         effects: { 求新: 1, 守正: 1 }, desc: '同样的内容，你的排版就是比别人的好看三倍。答辩评委的第一印象分全靠它。' },
+  { id: 'coffee',  rarity: 'SR',  icon: 'bowl',    name: '咖啡因耐受',       en: 'Caffeine Tolerant',    effects: { 体质: 2 },          desc: '第四杯美式下肚，你的心跳依然稳在 68，而室友已经在抖腿了。' },
+  { id: 'senior',  rarity: 'SR',  icon: 'globe',   name: '学长人脉',         en: 'Senior Network',       effects: { 守正: 1, 笃学: 1 }, desc: '考试重点、选课攻略、实验室门禁——你总能提前一步知道。' },
+  { id: 'labrat',  rarity: 'SR',  icon: 'flask',   name: '实验室钉子户',     en: 'Lab Squatter',         effects: { 力行: 2 },          desc: '老师傅都认识你，钥匙你有两把，连仪器报错代码你都背下来了。' },
+  { id: 'english', rarity: 'SR',  icon: 'lang',    name: '英语原片无字幕',   en: 'Raw Subtitles Off',    effects: { 笃学: 1, 求新: 1 }, desc: '别人还在看字幕，你已经在听讲座、读原版手册了。' },
+  { id: 'sleepless',rarity: 'SR', icon: 'clock',   name: '四点半的清醒',     en: '4:30 AM Clarity',      effects: { 笃学: 1, 体质: 1 }, desc: '凌晨四点半，别人都在打盹，只有你的脑子转得最快。' },
+  { id: 'handy',   rarity: 'SR',  icon: 'gear',    name: '什么都会修',       en: 'Fix Anything',         effects: { 力行: 1, 体质: 1 }, desc: '室友的风扇、学姐的自行车、辅导员的投影仪——都修过。' },
+  { id: 'orator',  rarity: 'SR',  icon: 'scale',   name: '站上台就发光',     en: 'Stage Presence',       effects: { 守正: 1, 求新: 1 }, desc: '台下腿抖，上台就稳。你天生适合被一群人看着说话。' },
+  { id: 'memory2', rarity: 'SR',  icon: 'book',    name: '错题本执念',       en: 'Error Log Zealot',     effects: { 笃学: 2 },          desc: '每道错题都要抄三遍，抄到最后你发现自己能预判出题人的思路。' },
+  { id: 'early',   rarity: 'SR',  icon: 'sun',     name: '五点半的生物钟',   en: '5:30 Internal Clock',  effects: { 体质: 2 },          desc: '不用闹钟，每天五点半自然醒。图书馆的保洁阿姨都跟你打招呼。' },
+  { id: 'design',  rarity: 'SR',  icon: 'draft',   name: '草图信手拈来',     en: 'Instant Sketch',       effects: { 求新: 2 },          desc: '别人还在描述那个零件长什么样，你已经在纸上画完了三视图。' },
+
+  /* —— R · 扩充 —— */
+  { id: 'bike',    rarity: 'R',   icon: 'route',   name: '共享单车猎人',     en: 'Bike Hunter',          effects: { 体质: 1 },          desc: '早八前五分钟，你能在教学楼周围找到唯一一辆有电的电动车。' },
+  { id: 'umbrella',rarity: 'R',   icon: 'leaf',    name: '永远带伞',         en: 'Always Prepared',      effects: { 守正: 1 },          desc: '南昌的雨说来就来，而你的包里永远有一把。' },
+  { id: 'group',   rarity: 'R',   icon: 'globe',   name: '小组作业扛把子',   en: 'Group Project Carrier',effects: { 力行: 1 },          desc: '最后永远是你在凌晨两点把五个人的部分合成一份。' },
+  { id: 'print',   rarity: 'R',   icon: 'monitor', name: '打印机克星',       en: 'Printer Whisperer',    effects: { 力行: 1 },          desc: '卡纸、缺墨、连不上网——你拍两下它就好了，没人知道为什么。' },
+  { id: 'noodle',  rarity: 'R',   icon: 'bowl',    name: '泡面鉴赏家',       en: 'Instant Noodle Critic',effects: { 体质: 1 },          desc: '哪个牌子第几分钟下料包最好吃，你有完整的研究结论。' },
+  { id: 'walk',    rarity: 'R',   icon: 'pulse',   name: '每天两万步',       en: '20K Steps',            effects: { 体质: 1 },          desc: '微信步数榜常年第一，室友怀疑你在宿舍里转圈。' },
+  { id: 'quiet',   rarity: 'R',   icon: 'shield',  name: '图书馆静音区常驻', en: 'Silent Zone Resident', effects: { 笃学: 1 },          desc: '你能在完全安静的环境里坐六个小时，一句话都不说。' },
+  { id: 'doodle',  rarity: 'R',   icon: 'draft',   name: '课本涂鸦家',       en: 'Margin Doodler',       effects: { 求新: 1 },          desc: '整本教材的页边都被你画满了飞机，老师翻到的时候愣了一下，然后笑了。' },
+  { id: 'deadline',rarity: 'R',   icon: 'clock',   name: '死线战士',         en: 'Deadline Warrior',     effects: { 笃学: 1 },          desc: '不拖到最后一天绝对不动手，但每次都能按时交。' },
+  { id: 'canteen2',rarity: 'R',   icon: 'coin',    name: '食堂省钱专家',     en: 'Canteen Economist',    effects: { 守正: 1 },          desc: '同样的钱，你能比别人多打一个菜，还知道哪个窗口几点打折。' },
+  { id: 'coach',   rarity: 'R',   icon: 'medal',   name: '运动会常客',       en: 'Sports Meet Regular',  effects: { 体质: 1 },          desc: '每年运动会都报名，从来没进过前三，但每年都报名。' },
+  { id: 'lucky2',  rarity: 'R',   icon: 'ticket',  name: '抽奖必中',         en: 'Lucky Draw Winner',    effects: { 求新: 1 },          desc: '社团抽奖、讲座抽奖、食堂开业抽奖——奖品堆了一抽屉。' }
 ];
 
 /* ---------- 校史节点 ---------- */
@@ -145,16 +181,81 @@ const TIMELINE = [
   { year: '2026',    name: '现在 · 前湖之畔',               note: '七十四载航空报国路，故事从你开始', now: true }
 ];
 
-/* ---------- 成就 ---------- */
+/* ---------- 成就 ----------
+   id 用于持久化解锁记录（localStorage: nchu-achievements）。
+   kind:
+     'flag'  —— 结算时检查 state.flags[flag]
+     'stat'  —— 结算时检查属性 stat >= value
+     'log'   —— 结算时检查 state.log 中出现过 log（事件标题/记录文本匹配）
+     'count' —— 结算时检查某项计数 count >= value（见 game.js 的 achievementCounters）
+     'end'   —— 结算时检查结局 ending === value
+   secret: true 的成就未解锁时不显示名称，只显示「？？？」。
+   ------------------------------------------------------------ */
 const ACHIEVEMENTS = [
-  { icon: 'star',   name: '入学第一课' },
-  { icon: 'tool',   name: '金工实习' },
-  { icon: 'drone',  name: '航模队' },
-  { icon: 'chart',  name: '图纸画到天亮' },
-  { icon: 'book',   name: '图书馆闭馆曲' },
-  { icon: 'pulse',  name: '赣江夜跑' },
-  { icon: 'ticket', name: '食堂三楼' },
-  { icon: 'wing',   name: '首飞成功' }
+  /* —— 入学 · 开局 —— */
+  { id: 'first_day',   icon: 'star',    name: '入学第一课',       desc: '走进前湖校区，成为 2026 级新生',              kind: 'always' },
+  { id: 'talent_ssr',  icon: 'medal',   name: '天选之子',         desc: '开局抽到 SSR 天赋',                          kind: 'flag',  flag: 'got_ssr' },
+  { id: 'allround',    icon: 'compass', name: '五项全能',         desc: '开局属性全部达到 6 点',                       kind: 'count', count: 'balanced', value: 1 },
+  { id: 'perfect_alloc',icon: 'pulse',  name: '精打细算',         desc: '把 10 点加点一分不剩地分完',                  kind: 'flag',  flag: 'alloc_full' },
+
+  /* —— 学业 —— */
+  { id: 'cet4_pass',   icon: 'book',    name: '四级上岸',         desc: '通过大学英语四级考试',                        kind: 'flag',  flag: 'cet4' },
+  { id: 'cet6_pass',   icon: 'book',    name: '六级战士',         desc: '通过大学英语六级考试',                        kind: 'flag',  flag: 'cet6' },
+  { id: 'metalwork',   icon: 'tool',    name: '金工实习',         desc: '在工程训练中心做出一把合格的锤子',            kind: 'flag',  flag: 'metalwork' },
+  { id: 'core_ok',     icon: 'shield',  name: '硬骨头',           desc: '熬过最难的一学期且全部通过',                  kind: 'flag',  flag: 'core_ok' },
+  { id: 'thesis_ok',   icon: 'draft',   name: '开题通过',         desc: '毕业设计开题一次通过',                        kind: 'flag',  flag: 'thesis_ok' },
+  { id: 'defense_ok',  icon: 'medal',   name: '答辩优秀',         desc: '毕业答辩获得优秀评价',                        kind: 'flag',  flag: 'defense_ok' },
+  { id: 'scholar',     icon: 'note',    name: '学神',             desc: '毕业时笃学达到 18 点',                        kind: 'stat',  stat: '笃学', value: 18 },
+
+  /* —— 竞赛 —— */
+  { id: 'mcm_award',   icon: 'chart',   name: '数模获奖',         desc: '在全国大学生数学建模竞赛中获奖',              kind: 'flag',  flag: 'mcm_award' },
+  { id: 'challenge',   icon: 'spark',   name: '挑战杯',           desc: '在挑战杯省赛中获奖',                          kind: 'flag',  flag: 'challenge_award' },
+  { id: 'elite_class', icon: 'medal',   name: '菁英特训班',       desc: '入选航空菁英特训班',                          kind: 'flag',  flag: 'elite' },
+  { id: 'contest_king',icon: 'star',    name: '竞赛收割机',       desc: '同一局里拿到两项以上竞赛奖项',                kind: 'count', count: 'awards', value: 2 },
+
+  /* —— 社团 —— */
+  { id: 'club_join',   icon: 'globe',   name: '百团大战',         desc: '在火箭广场加入一个社团',                      kind: 'flag',  flag: 'club_join' },
+  { id: 'club_leader', icon: 'scale',   name: '社长大人',         desc: '当选社团负责人',                              kind: 'flag',  flag: 'club_leader' },
+  { id: 'club_all',    icon: 'globe',   name: '社团全勤',         desc: '走完全部三次社团专属事件',                    kind: 'count', count: 'club_events', value: 3 },
+  { id: 'drone_fly',   icon: 'drone',   name: '首飞成功',         desc: '让第一架自制航模真正飞起来',                  kind: 'flag',  flag: 'drone_fly' },
+
+  /* —— 生活 —— */
+  { id: 'night_run',   icon: 'pulse',   name: '赣江夜跑',         desc: '把体质练到 14 点以上',                        kind: 'stat',  stat: '体质', value: 14 },
+  { id: 'iron_body',   icon: 'flame',   name: '铁打的人',         desc: '毕业时体质达到 18 点',                        kind: 'stat',  stat: '体质', value: 18 },
+  { id: 'canteen',     icon: 'bowl',    name: '食堂三楼',         desc: '成为食堂三楼常客',                            kind: 'flag',  flag: 'canteen_friend' },
+  { id: 'library',     icon: 'book',    name: '图书馆闭馆曲',     desc: '在图书馆待到闭馆至少三次',                    kind: 'count', count: 'library', value: 3 },
+  { id: 'night_owl',   icon: 'moon',    name: '图纸画到天亮',     desc: '通宵赶工至少两次',                            kind: 'count', count: 'allnighter', value: 2 },
+  { id: 'love',        icon: 'spark',   name: '青春恋爱物语',     desc: '在大学里谈了一场恋爱',                        kind: 'flag',  flag: 'love' },
+  { id: 'heartbreak',  icon: 'leaf',    name: '毕业即分手',       desc: '恋爱走到毕业季却没能继续',                    kind: 'flag',  flag: 'heartbreak' },
+
+  /* —— 挫折与危险 —— */
+  { id: 'fail_exam',   icon: 'shield',  name: '挂科初体验',       desc: '第一次挂科',                                  kind: 'flag',  flag: 'fail_exam' },
+  { id: 'probation',   icon: 'clock',   name: '学业预警',         desc: '收到一次学业预警通知',                        kind: 'flag',  flag: 'probation' },
+  { id: 'survive',     icon: 'flame',   name: '悬崖勒马',         desc: '在收到学业预警后仍顺利毕业',                  kind: 'flag',  flag: 'survived_probation' },
+  { id: 'expelled',    icon: 'lock',    name: '劝退通知',         desc: '因学业原因被学校劝退',                        kind: 'end',   end: 'expelled' },
+  { id: 'dropout',     icon: 'compass', name: '另一种选择',       desc: '主动退学，走上另一条路',                      kind: 'end',   end: 'dropout' },
+
+  /* —— 职业 —— */
+  { id: 'intern_ok',   icon: 'tool',    name: '实习优秀',         desc: '生产实习获得优秀鉴定',                        kind: 'flag',  flag: 'intern_ok' },
+  { id: 'aviation_job',icon: 'plane',   name: '航空报国',         desc: '签约航空国防单位',                            kind: 'flag',  flag: 'aviation_job' },
+  { id: 'postgrad',    icon: 'wing',    name: '保研成功',         desc: '拿到推免资格',                                kind: 'flag',  flag: 'postgrad' },
+  { id: 'network',     icon: 'globe',   name: '人脉',             desc: '实习期间结识三位以上工程师',                  kind: 'flag',  flag: 'network' },
+
+  /* —— 结局收集 —— */
+  { id: 'end_aviation',icon: 'plane',   name: '航空报国 · 结局',  desc: '达成「航空报国」结局',                        kind: 'end',   end: 'aviation' },
+  { id: 'end_postgrad',icon: 'wing',    name: '凌云直上 · 结局',  desc: '达成「凌云直上」结局',                        kind: 'end',   end: 'postgrad' },
+  { id: 'end_industry',icon: 'tool',    name: '脚踏实地 · 结局',  desc: '达成「脚踏实地」结局',                        kind: 'end',   end: 'industry' },
+  { id: 'end_wander',  icon: 'compass', name: '另辟蹊径 · 结局',  desc: '达成「另辟蹊径」结局',                        kind: 'end',   end: 'wander' },
+  { id: 'end_normal',  icon: 'star',    name: '平凡四年 · 结局',  desc: '达成「平凡四年」结局',                        kind: 'end',   end: 'normal' },
+  { id: 'end_legend',  icon: 'flame',   name: '传奇 · 结局',      desc: '达成「传奇」结局',                            kind: 'end',   end: 'legend' },
+  { id: 'end_entrepreneur', icon: 'coin', name: '创业 · 结局',    desc: '达成「创业」结局',                            kind: 'end',   end: 'entrepreneur' },
+  { id: 'end_love',    icon: 'spark',   name: '双向奔赴 · 结局',  desc: '达成「双向奔赴」结局',                        kind: 'end',   end: 'love' },
+  { id: 'end_exam',    icon: 'book',    name: '上岸 · 结局',      desc: '达成「上岸」结局',                            kind: 'end',   end: 'postgrad_exam' },
+
+  /* —— 隐藏 —— */
+  { id: 'luchao',      icon: 'medal',   name: '卢校长？',         desc: '以「卢超」之名入学并直接通关',                kind: 'flag',  flag: 'luchao', secret: true },
+  { id: 'completionist', icon: 'star',  name: '全收集',           desc: '解锁其余所有成就',                            kind: 'count', count: 'all_others', value: 1, secret: true },
+  { id: 'ten_lives',   icon: 'refresh', name: '十世轮回',         desc: '累计完成十次大学四年',                        kind: 'count', count: 'playthroughs', value: 10, secret: true }
 ];
 
 /* ---------- 开场引言 ---------- */
@@ -209,10 +310,10 @@ const CLUBS = [
         text: '队里发给你一堆 KT 板和一根热熔胶枪。老队员说：「不用图纸，先飞起来再说。」你在操场边上折腾了三个晚上，机身歪得像被门夹过。',
         choices: [
           { label: '按自己的思路改，赌一把', check: { stat: '求新', dc: 12 },
-            success: { text: '第四晚，它真的离地了。歪歪扭扭地飞了 40 米，然后一头扎进灌木丛——但所有人都在鼓掌。', effects: { 求新: 2 }, record: '第一架自制航模首飞成功' },
+            success: { text: '第四晚，它真的离地了。歪歪扭扭地飞了 40 米，然后一头扎进灌木丛——但所有人都在鼓掌。', effects: { 求新: 2 }, record: '第一架自制航模首飞成功', flag: 'drone_fly' },
             fail: { text: '它刚出手就翻了个跟头。老队员拍拍你：「摔二十架之后，你就入门了。」', effects: { 力行: 1 }, record: '第一架航模首飞失败' } },
           { label: '老老实实照着队里的图纸做', check: { stat: '力行', dc: 10 },
-            success: { text: '标准图纸、标准工艺，第一次试飞就平稳滑翔了 60 米。稳，但也只是稳。', effects: { 力行: 2 }, record: '按图纸完成首飞' },
+            success: { text: '标准图纸、标准工艺，第一次试飞就平稳滑翔了 60 米。稳，但也只是稳。', effects: { 力行: 2 }, record: '按图纸完成首飞', flag: 'drone_fly' },
             fail: { text: '胶水涂多了，机翼重得像块砖。它飞了五米就掉了。', effects: { 力行: 1 } } }
         ]
       },
@@ -598,7 +699,13 @@ const EVENTS = [
         fail: { text: '十二月，你在考场上发烧到 38 度。写完最后一科，你趴在桌上睡了半小时。', effects: { 笃学: 1 }, record: '带病考完研' } },
       { label: '直接工作，早点上手', check: { stat: '力行', dc: 12 },
         success: { text: '你把简历改了十一版，投了四十家。第一个 offer 来自一家做航空零部件的企业。', effects: { 力行: 2, 守正: 1 }, record: '拿到第一份 offer', flag: 'job' },
-        fail: { text: '秋招投了三十家，面试了六家，还没定下来。', effects: { 力行: 1 }, record: '秋招还在等消息' } }
+        fail: { text: '秋招投了三十家，面试了六家，还没定下来。', effects: { 力行: 1 }, record: '秋招还在等消息' } },
+      { label: '考公，回老家也挺好', check: { stat: '守正', dc: 12 },
+        success: { text: '行测申论刷了两千题。出成绩那天，你进了面试，排名第三。', effects: { 守正: 2 }, record: '考公进入面试', flag: 'civil' },
+        fail: { text: '差 3 分进面。你把书收进箱子，说明年再来。', effects: { 守正: 1 }, record: '考公差 3 分' } },
+      { label: '跟朋友一起做点自己的东西', check: { stat: '求新', dc: 14 },
+        success: { text: '你们三个人凑了两万块，在学校边上租了个工位。第一个客户是校门口的打印店老板。', effects: { 求新: 2, 守正: 1 }, record: '和朋友一起创业', flag: 'startup' },
+        fail: { text: '做了三个月，产品没人用，钱也快花完了。散伙那天，你们在食堂吃了最后一顿。', effects: { 求新: 1 }, record: '第一次创业失败' } }
     ]
   },
   {
@@ -675,5 +782,50 @@ const ENDINGS = [
     id: 'normal', title: '平凡四年', en: 'FOUR YEARS',
     icon: 'star',
     text: '没有什么惊天动地的故事。\n\n你上完了该上的课，通过了该通过的考试，认识了几个可以一辈子联系的朋友，在图书馆熬过几个通宵，在赣江边吹过几次风。\n\n毕业照拍完那天，你把学士帽抛上去，又接住。四年就这么过去了。'
+  },
+  {
+    id: 'expelled', title: '劝退通知', en: 'ACADEMIC DISMISSAL',
+    icon: 'lock', bad: true,
+    text: '教务处的通知贴在学院公告栏上，你的名字在第十七行。\n\n「根据《南昌航空大学学生学籍管理规定》，该生累计不及格学分已达退学标准……」\n\n你站在公告栏前，看见有新生好奇地探头过来看。你想说点什么，最后什么都没说。\n\n离校那天，宿舍楼下的樟树正在落叶。你把行李箱拉出校门，回头看了一眼那栋住了两年的楼。'
+  },
+  {
+    id: 'dropout', title: '另一种选择', en: 'THE OTHER ROAD',
+    icon: 'compass',
+    text: '你在退学申请书上签了字。\n\n辅导员劝了你三次，父母在电话里沉默了很久。你说：「我不是念不下去，我是想清楚了。」\n\n后来你去了一家做无人机的创业公司。老板比你大三岁，也是退学的。他看了看你的作品集，说：「明天来上班。」\n\n学历这条路你走了一半，但另一条路，你自己铺完了。'
+  },
+  {
+    id: 'legend', title: '传奇', en: 'THE LEGEND',
+    icon: 'flame',
+    text: '毕业典礼上，校长念到你的名字时停顿了一下。\n\n四年里，你拿过能拿的所有奖，做过能做的所有项目，带过一届又一届学弟学妹。学院走廊的荣誉墙上，你的照片从大三那年就没摘下来过。\n\n散场的时候，一个陌生的新生跑过来问：「学长，他们说你是传奇，是真的吗？」\n\n你笑了笑：「我只是每天比别人多待两个小时。」'
+  },
+  {
+    id: 'entrepreneur', title: '创业', en: 'STARTUP',
+    icon: 'coin',
+    text: '大四那年，你和两个队友在校外租了一间三十平米的办公室。\n\n第一年，你们做了三个产品，死了两个。第二年，第三个活了下来。\n\n签第一份正式合同那天，你在合同上写下公司名字，忽然想起大三那年挑战杯答辩，评委说：「你这个想法，商业上不太行。」\n\n你把合同折好，放进口袋。'
+  },
+  {
+    id: 'love', title: '双向奔赴', en: 'TWO-WAY STREET',
+    icon: 'spark',
+    text: '毕业照那天，你们站在图书馆前的台阶上。\n\n四年里，你们一起占过座，一起熬过夜，一起在赣江边走过很多次。你去实习的那三个月，她每周给你寄一次食堂三楼的辣酱。\n\n拍完照，她忽然说：「我签的单位在南昌。」\n\n你愣了一下，然后笑了：「我知道。我也是。」'
+  },
+  {
+    id: 'postgrad_exam', title: '上岸', en: 'MADE IT',
+    icon: 'book',
+    text: '出分那天，你刷新了十七次页面。\n\n三百天，每天十二个小时，图书馆四楼靠窗第三个位置，从春天坐到冬天。有段时间你觉得自己撑不下去了，就在走廊上站一会儿，再回去坐下。\n\n复试通过的消息是在食堂门口收到的。你端着餐盘站在那里，忽然不知道该往哪儿走。'
+  },
+  {
+    id: 'research', title: '科研之路', en: 'INTO THE LAB',
+    icon: 'flask',
+    text: '你留在了实验室。\n\n导师说：「做科研是一件很寂寞的事，你要想清楚。」你想了三天，然后回去了。\n\n第一篇论文被拒了四次，第五次录用。审稿意见里有一句：「This work is solid.」你把这句话截图存了下来。\n\n深夜的实验室只有仪器的风扇在响，你忽然觉得，这就是你想要的生活。'
+  },
+  {
+    id: 'civil_servant', title: '体制内', en: 'IN THE SYSTEM',
+    icon: 'shield',
+    text: '省考的录取名单出来那天，你在名单上找了三遍自己的名字。\n\n入职后被分到了一个和航空产业相关的处室。第一年，你写了两百多份材料，跑了三十多家企业。\n\n有一次去一家航空零部件厂调研，厂长听说你是昌航毕业的，握着你的手说：「我们厂一半的技术员都是你们学校的。」\n\n你忽然觉得，这条路也没走错。'
+  },
+  {
+    id: 'abroad', title: '越洋', en: 'ACROSS THE OCEAN',
+    icon: 'globe',
+    text: 'offer 是在凌晨三点收到的。\n\n你盯着屏幕上那行「We are pleased to offer you admission」，看了很久，然后把室友摇醒了。\n\n机场送别那天，父母站在安检口外面。你回头挥了挥手，然后走进了那条长长的通道。\n\n飞机起飞的时候，你从舷窗往下看，赣江在阳光下是一条亮线。'
   }
 ];

@@ -6,6 +6,8 @@
 (function () {
   const $ = (id) => document.getElementById(id);
   const icon = (name) => `<svg aria-hidden="true"><use href="#i-${name}"></use></svg>`;
+  const ACHV_KEY = 'nchu-achievements';
+
   const state = {
     name: '', alloc: {}, major: null, hand: [], talents: [],
     /* —— 四年 —— */
@@ -17,9 +19,14 @@
     queue: [],        /* 本学期待办事件 */
     step: 0,          /* 本学期已处理到第几个 */
     secret: false,    /* 卢超彩蛋 */
-    ending: null
+    ending: null,
+    /* —— 风险与成就 —— */
+    risk: 0,          /* 0-100，负面选择累加；学期末结算 */
+    counters: {},     /* 跨事件计数：library / allnighter / awards / club_events / playthroughs */
+    unlocked: {}      /* 已解锁成就（跨局持久化） */
   };
   let toastTimer;
+  let achvQueue = [];
 
   /* ---------- 属性读写 ---------- */
   const STAT_KEYS = () => STATS.map((s) => s.key);
@@ -66,6 +73,7 @@
       page.classList.toggle('active', active);
     });
     if (name === 'allocate' && !$('allocate-list').children.length) renderAllocate();
+    if (name === 'achievements') renderAchievements();
     window.scrollTo(0, 0);
     const heading = document.querySelector('#' + name + '-page h1, #' + name + '-page h2');
     if (heading) {
@@ -351,10 +359,101 @@
   }
 
   /* ---------- 成就 ---------- */
+  function loadAchievements() {
+    try {
+      const raw = localStorage.getItem(ACHV_KEY);
+      if (raw) return JSON.parse(raw) || {};
+    } catch (e) { /* 忽略 */ }
+    return {};
+  }
+
+  function saveAchievements() {
+    try { localStorage.setItem(ACHV_KEY, JSON.stringify(state.unlocked)); } catch (e) { /* 忽略 */ }
+  }
+
+  function unlockedCount() {
+    return ACHIEVEMENTS.filter((a) => state.unlocked[a.id]).length;
+  }
+
   function renderAchievements() {
-    $('achv-grid').innerHTML = ACHIEVEMENTS.map((item) =>
-      '<div class="achv-item" title="敬请期待">' + icon(item.icon) +
-      '<span>' + item.name + '</span></div>').join('');
+    const total = ACHIEVEMENTS.length;
+    const got = unlockedCount();
+    const bar = $('achv-progress-bar');
+    const text = $('achv-progress-text');
+    if (bar) bar.style.width = Math.round((got / total) * 100) + '%';
+    if (text) text.textContent = got + ' / ' + total;
+
+    $('achv-grid').innerHTML = ACHIEVEMENTS.map((item) => {
+      const on = !!state.unlocked[item.id];
+      const hidden = item.secret && !on;
+      return '<div class="achv-item' + (on ? ' unlocked' : '') + (item.secret ? ' secret' : '') + '"' +
+        ' data-achv="' + item.id + '" title="' + (hidden ? '隐藏成就' : item.desc) + '">' +
+        '<span class="achv-icon">' + icon(hidden ? 'lock' : item.icon) + '</span>' +
+        '<span class="achv-name">' + (hidden ? '？？？' : item.name) + '</span>' +
+        '<span class="achv-desc">' + (hidden ? '隐藏成就 · 尚未解锁' : item.desc) + '</span>' +
+        (on ? '<span class="achv-badge">' + icon('check') + '</span>' : '') +
+        '</div>';
+    }).join('');
+  }
+
+  /* 判定单个成就条件是否满足 */
+  function checkAchievement(item) {
+    const c = state.counters || {};
+    switch (item.kind) {
+      case 'always': return true;
+      case 'flag':   return !!state.flags[item.flag];
+      case 'stat':   return stat(item.stat) >= item.value;
+      case 'end':    return !!state.ending && state.ending.id === item.end;
+      case 'count':
+        if (item.count === 'all_others') {
+          /* 除本成就与十世轮回外全部解锁 */
+          const others = ACHIEVEMENTS.filter((a) => a.id !== item.id && a.id !== 'ten_lives');
+          return others.every((a) => state.unlocked[a.id]);
+        }
+        if (item.count === 'balanced') {
+          return STAT_KEYS().every((k) => stat(k) >= 6);
+        }
+        return (c[item.count] || 0) >= item.value;
+      default: return false;
+    }
+  }
+
+  /* 结算所有成就，把新解锁的推进队列并弹提示 */
+  function evaluateAchievements(silent) {
+    const fresh = [];
+    ACHIEVEMENTS.forEach((item) => {
+      if (state.unlocked[item.id]) return;
+      if (checkAchievement(item)) {
+        state.unlocked[item.id] = true;
+        fresh.push(item);
+      }
+    });
+    if (fresh.length) {
+      saveAchievements();
+      if (!silent) {
+        fresh.forEach((item, i) => {
+          achvQueue.push(item);
+          setTimeout(() => showAchievementToast(item), i * 1100);
+        });
+      }
+    }
+    return fresh;
+  }
+
+  function showAchievementToast(item) {
+    const box = $('achv-toast');
+    if (!box) return;
+    box.innerHTML = '<span class="at-icon">' + icon(item.icon) + '</span>' +
+      '<span class="at-body"><span class="at-label">成就解锁</span>' +
+      '<strong class="at-name">' + item.name + '</strong></span>';
+    box.classList.add('show');
+    clearTimeout(showAchievementToast._timer);
+    showAchievementToast._timer = setTimeout(() => box.classList.remove('show'), 2800);
+  }
+
+  function bumpCounter(key, by) {
+    if (!state.counters) state.counters = {};
+    state.counters[key] = (state.counters[key] || 0) + (by === undefined ? 1 : by);
   }
 
   /* ==========================================================
@@ -400,7 +499,56 @@
     });
   }
 
-  /* ---------- 属性面板 ---------- */
+  /* ---------- 风险（学业预警 / 劝退） ---------- */
+  function addRisk(delta) {
+    if (!delta) return;
+    state.risk = Math.max(0, Math.min(100, state.risk + delta));
+    renderRiskBar();
+  }
+
+  function renderRiskBar() {
+    const bar = $('risk-bar');
+    const box = $('risk-box');
+    if (!bar || !box) return;
+    bar.style.width = state.risk + '%';
+    box.classList.toggle('warn', state.risk >= 40 && state.risk < 70);
+    box.classList.toggle('danger', state.risk >= 70);
+    const label = $('risk-label');
+    if (label) {
+      label.textContent = state.risk >= 70 ? '危险' : state.risk >= 40 ? '预警' : '正常';
+    }
+  }
+
+  /* 学期末结算：60 分预警、100 分劝退 */
+  function settleRisk() {
+    if (state.risk >= 100) {
+      state.flags['expelled'] = true;
+      return 'expelled';
+    }
+    if (state.risk >= 60) {
+      state.flags['probation'] = true;
+      addStats({ 笃学: -1 });
+      state.risk = Math.max(0, state.risk - 25);
+      pushLog({
+        term: state.term, title: '学业预警',
+        text: '本学期累计不及格科目过多，学院下发了学业预警通知。', effects: { 笃学: -1 }
+      });
+      toast('收到学业预警 · 请立刻调整状态');
+    }
+    return null;
+  }
+
+  /* ---------- 随机事件 ---------- */
+  function pickRandomEvent() {
+    if (!RANDOM_EVENTS || !RANDOM_EVENTS.length) return null;
+    if (Math.random() > 0.55) return null;
+    const used = state.flags['random_used'] || [];
+    const pool = RANDOM_EVENTS.filter((e) => used.indexOf(e.id) < 0);
+    if (!pool.length) return null;
+    const ev = pool[Math.floor(Math.random() * pool.length)];
+    state.flags['random_used'] = used.concat([ev.id]);
+    return Object.assign({}, ev, { random: true, tag: ev.tag || '随机事件' });
+  }
   function renderStatPanel() {
     const panel = $('game-stats');
     if (!panel || !state.stats) return;
@@ -491,9 +639,11 @@
           const club = CLUBS.find((c) => c.id === id);
           state.club = club;
           state.flags['club_' + id] = true;
+          state.flags['club_join'] = true;
           addStats(club.effects);
           pushLog({ term: state.term, title: '百团大战', text: '你加入了「' + club.name + '」。', effects: club.effects });
           renderStatPanel();
+          evaluateAchievements();
           toast('已加入：' + club.name);
           nextStep();
         });
@@ -535,6 +685,23 @@
     addStats(effects);
     if (outcome.flag) state.flags[outcome.flag] = true;
     if (choice.check && checkResult.ok && choice.success.flag) state.flags[choice.success.flag] = true;
+    if (outcome.ending) state.flags['force_ending'] = outcome.ending;
+
+    /* 风险：选项自带的 risk 优先，其次是 outcome.risk */
+    const riskDelta = (choice.risk || 0) + (outcome.risk || 0);
+    if (riskDelta) addRisk(riskDelta);
+
+    /* 计数器：驱动 count 类成就 */
+    if (ev.id === 'r_library_close' || /闭馆|自习室/.test(outcome.record || '')) bumpCounter('library');
+    if (ev.id === 'r_allnighter' || /通宵/.test(outcome.record || '')) bumpCounter('allnighter');
+    if (/award/.test(outcome.flag || '')) bumpCounter('awards');
+    if (ev.clubName) bumpCounter('club_events');
+    if (state.club && ev.clubName) state.flags['club_join'] = true;
+    if (/食堂/.test(outcome.record || '')) state.flags['canteen_friend'] = state.flags['canteen_friend'] || undefined;
+    if (ev.id === 'r_lottery' && checkResult && checkResult.ok) state.flags['canteen_friend'] = true;
+    if (ev.id === 'hangmo_1' && checkResult && checkResult.ok) state.flags['drone_fly'] = true;
+    if (state.talents.some((t) => t.rarity === 'SSR')) state.flags['got_ssr'] = true;
+    if (state.alloc && allocUsed() === ALLOCATE_POINTS) state.flags['alloc_full'] = true;
 
     pushLog({
       term: state.term,
@@ -547,6 +714,7 @@
 
     Object.keys(effects).forEach((key) => pulseStat(key));
     renderStatPanel();
+    evaluateAchievements();
 
     const verdict = checkResult
       ? '<span class="verdict ' + (checkResult.ok ? 'ok' : 'bad') + '">' +
@@ -555,11 +723,18 @@
           checkResult.total + ' / ' + checkResult.dc + '</span>'
       : '';
 
+    const riskNote = riskDelta > 0
+      ? '<div class="risk-note">学业风险 +' + riskDelta + ' · 当前 ' + state.risk + '/100</div>'
+      : riskDelta < 0
+        ? '<div class="risk-note down">学业风险 ' + riskDelta + ' · 当前 ' + state.risk + '/100</div>'
+        : '';
+
     box.innerHTML =
       '<div class="outcome' + (checkResult && !checkResult.ok ? ' failed' : '') + '">' +
         (verdict ? '<div class="verdict-row">' + verdict + '</div>' : '') +
         '<p class="outcome-text">' + outcome.text.replace(/\n/g, '<br>') + '</p>' +
         (Object.keys(effects).length ? '<div class="effect-row">' + effectChipsInline(effects) + '</div>' : '') +
+        riskNote +
         '<button class="primary-button compact" type="button" id="event-next">继续</button>' +
       '</div>';
 
@@ -582,6 +757,12 @@
         const raw = state.club.events[idx];
         queue.push(Object.assign({}, raw, { clubName: state.club.name, tag: raw.tag }));
       }
+    }
+    /* 随机事件：55% 概率插到队列中间 */
+    const extra = pickRandomEvent();
+    if (extra) {
+      const at = Math.max(1, Math.floor(queue.length / 2));
+      queue.splice(at, 0, extra);
     }
     state.queue = queue;
     state.step = 0;
@@ -610,12 +791,27 @@
       '<span class="gs-item">' + icon(STATS.find((s) => s.key === key).icon) +
       '<em>' + key + '</em><b>' + stat(key) + '</b></span>').join('');
 
+    /* 学期末结算学业风险 */
+    const expelled = settleRisk();
+    if (expelled === 'expelled') {
+      finishGame();
+      return;
+    }
+
+    const riskLevel = state.risk >= 70 ? '危险' : state.risk >= 40 ? '预警' : '正常';
+    const riskClass = state.risk >= 70 ? 'danger' : state.risk >= 40 ? 'warn' : '';
+
     stage.innerHTML =
       '<div class="term-summary">' +
         '<span class="summary-label">TERM COMPLETE</span>' +
         '<h3>' + term.label + ' 结束</h3>' +
         '<p class="summary-sub">' + term.year + ' · 属性合计 ' + totalStats() + '</p>' +
         '<div class="summary-stats">' + gains + '</div>' +
+        '<div class="summary-risk ' + riskClass + '">' +
+          '<span class="sr-label">学业风险</span>' +
+          '<span class="sr-track"><i style="width:' + state.risk + '%"></i></span>' +
+          '<span class="sr-value">' + state.risk + ' / 100 · ' + riskLevel + '</span>' +
+        '</div>' +
         '<div class="summary-log">' +
           state.log.filter((l) => l.term === state.term).map((l) =>
             '<div class="log-line"><span class="log-dot"></span>' +
@@ -641,12 +837,17 @@
     state.term = 0;
     state.log = [];
     state.flags = {};
+    state.risk = 0;
+    state.counters = {};
+    state.ending = null;
     state.stats = computeStats(state.major.id, state.talents, state.alloc);
     buildTermQueue();
     renderTermHeader();
     renderStatPanel();
+    renderRiskBar();
     renderCurrentStep();
     showPage('game');
+    evaluateAchievements();
   }
 
   /* ---------- 结局判定 ---------- */
@@ -654,6 +855,16 @@
     if (state.secret) return ENDINGS.find((e) => e.id === 'luchao');
 
     const f = state.flags;
+
+    /* 强制结局（事件里直接指定） */
+    if (f.force_ending) {
+      const forced = ENDINGS.find((e) => e.id === f.force_ending);
+      if (forced) return forced;
+    }
+
+    /* 被劝退 */
+    if (f.expelled) return ENDINGS.find((e) => e.id === 'expelled');
+
     const aviationScore =
       (f.aviation_job ? 3 : 0) + (f.intern_ok ? 2 : 0) + (f.network ? 1 : 0) +
       (f.elite ? 1 : 0) + (stat('守正') >= 12 ? 1 : 0) + (stat('力行') >= 12 ? 1 : 0);
@@ -665,6 +876,32 @@
     const industryScore =
       (f.job ? 2 : 0) + (f.intern_ok ? 1 : 0) + (f.metalwork ? 1 : 0) +
       (stat('力行') >= 13 ? 1 : 0);
+
+    const legendScore =
+      (stat('笃学') >= 18 ? 2 : 0) + (stat('力行') >= 18 ? 2 : 0) +
+      (f.mcm_award ? 1 : 0) + (f.challenge_award ? 1 : 0) + (f.elite ? 1 : 0) +
+      (f.paper ? 1 : 0);
+
+    const entrepreneurScore =
+      (f.startup ? 3 : 0) + (f.parttime ? 1 : 0) + (f.network ? 1 : 0) +
+      (stat('求新') >= 14 ? 2 : 0);
+
+    const loveScore =
+      (f.love ? 3 : 0) + (f.long_distance ? 2 : 0) + (f.heartbreak ? -2 : 0);
+
+    const examScore =
+      (f.postgrad_exam ? 3 : 0) + (f.civil ? 2 : 0) + (stat('笃学') >= 13 ? 1 : 0);
+
+    const abroadScore =
+      (f.abroad ? 3 : 0) + (f.cet6 ? 1 : 0) + (stat('笃学') >= 13 ? 1 : 0);
+
+    /* 强制事件已经处理过，这里只处理自然达成 */
+    if (legendScore >= 5) return ENDINGS.find((e) => e.id === 'legend');
+    if (entrepreneurScore >= 4) return ENDINGS.find((e) => e.id === 'entrepreneur');
+    if (loveScore >= 5) return ENDINGS.find((e) => e.id === 'love');
+    if (abroadScore >= 5) return ENDINGS.find((e) => e.id === 'abroad');
+    if (examScore >= 5 && stat('笃学') < 16) return ENDINGS.find((e) => e.id === 'postgrad_exam');
+    if (f.paper && stat('笃学') >= 14) return ENDINGS.find((e) => e.id === 'research');
 
     const best = Math.max(aviationScore, researchScore, industryScore);
     if (best >= 4 && aviationScore === best) return ENDINGS.find((e) => e.id === 'aviation');
@@ -678,6 +915,11 @@
     const ending = pickEnding();
     state.ending = ending;
     if (state.secret) state.flags[SECRET_ACHIEVEMENT] = true;
+    /* 结局解锁 + 通关计数 */
+    state.flags['end_' + ending.id] = true;
+    bumpCounter('playthroughs');
+    /* 先结算成就，结局页上的进度才是最新的 */
+    evaluateAchievements();
     renderEnding(ending);
     showPage('ending');
   }
@@ -690,6 +932,9 @@
     $('ending-en').textContent = ending.en;
     $('ending-text').innerHTML = ending.text.replace(/\n/g, '<br>');
 
+    const card = $('ending-page').querySelector('.ending-card');
+    if (card) card.classList.toggle('bad', !!ending.bad);
+
     $('ending-name').textContent = state.name;
     $('ending-major').textContent = state.major.name;
     $('ending-college').textContent = state.major.college;
@@ -699,6 +944,17 @@
       '<span class="talent-chip">' + icon(t.icon) + ' ' + t.name +
       '<em>' + RARITY_LABEL[t.rarity] + '</em></span>').join('');
     $('ending-club').textContent = state.club ? state.club.name : '未加入社团';
+
+    /* 成就进度 */
+    const got = unlockedCount();
+    const total = ACHIEVEMENTS.length;
+    const meta = $('ending-meta');
+    if (meta) {
+      meta.innerHTML =
+        '<span class="em-item">' + icon('medal') + ' 成就 ' + got + ' / ' + total + '</span>' +
+        '<span class="em-item">' + icon('clock') + ' 学业风险 ' + state.risk + ' / 100</span>' +
+        '<span class="em-item">' + icon('route') + ' 经历 ' + state.log.length + ' 个事件</span>';
+    }
 
     const highlights = state.log.filter((l) => l.ok === true || (l.ok === null && l.effects &&
       Object.values(l.effects).some((v) => v > 0))).slice(-8);
@@ -838,6 +1094,8 @@
       state.step = 0;
       state.secret = false;
       state.ending = null;
+      state.risk = 0;
+      state.counters = {};
       clearSecretMode();
       $('name-form').reset();
       $('name-error').textContent = '';
@@ -883,6 +1141,7 @@
 
     renderMajors();
     renderTimeline();
+    state.unlocked = loadAchievements();
     renderAchievements();
   }
 
@@ -902,7 +1161,13 @@
     startJourney: startJourney, buildTermQueue: buildTermQueue, renderCurrentStep: renderCurrentStep,
     resolveChoice: resolveChoice, finishGame: finishGame, pickEnding: pickEnding,
     rollCheck: rollCheck, stat: stat, addStats: addStats, totalStats: totalStats,
-    isSecretName: isSecretName, applySecretMode: applySecretMode
+    isSecretName: isSecretName, applySecretMode: applySecretMode,
+    /* 成就 / 风险 / 随机事件 */
+    achievements: ACHIEVEMENTS, renderAchievements: renderAchievements,
+    evaluateAchievements: evaluateAchievements, unlockedCount: unlockedCount,
+    checkAchievement: checkAchievement, bumpCounter: bumpCounter,
+    addRisk: addRisk, settleRisk: settleRisk, pickRandomEvent: pickRandomEvent,
+    renderRiskBar: renderRiskBar, randomEvents: RANDOM_EVENTS
   };
 })();
 

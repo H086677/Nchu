@@ -206,6 +206,11 @@
             <span class="side-label">你的属性</span>
             <div class="game-stats" id="game-stats"></div>
           </div>
+          <div class="side-card risk-box" id="risk-box">
+            <span class="side-label">学业风险 <em id="risk-label">正常</em></span>
+            <div class="risk-track"><i id="risk-bar"></i></div>
+            <p class="side-note risk-note-text">逃课、躺平、通宵会上涨；累计 60 触发学业预警，100 直接劝退。</p>
+          </div>
           <div class="side-card side-card-quiet">
             <span class="side-label">本作说明</span>
             <p class="side-note">属性检定 = 属性值 + 1d20，达到阈值即成功。属性与天赋会一路影响四年里的每一次选择。</p>
@@ -236,6 +241,8 @@
           <div class="talent-strip" id="ending-talents"></div>
           <span class="ticket-code">NCHU · CLASS OF 2030</span>
         </div>
+
+        <div class="ending-meta" id="ending-meta"></div>
 
         <div class="ending-highlights">
           <span class="side-label">四年里，你记得的几件事</span>
@@ -271,14 +278,21 @@
       <div class="page-content">
         <p class="section-eyebrow">YOUR MILESTONES</p>
         <h2 id="achievements-title">成就收集</h2>
-        <p class="section-subtitle">敬请期待 · 后续版本开放</p>
+        <p class="section-subtitle">四年里藏着的每一件小事，都会被记下来</p>
+        <div class="achv-progress">
+          <span class="ap-label">已解锁</span>
+          <span class="ap-track"><i id="achv-progress-bar"></i></span>
+          <span class="ap-value" id="achv-progress-text">0 / 0</span>
+        </div>
         <div class="achv-grid" id="achv-grid"></div>
       </div>
     </section>
   </main>
   <footer class="site-footer"><span>NCHU · 逐梦蓝天</span><i></i><span>日新自强 · 知行合一</span></footer>
   <div class="toast" id="toast" role="status"></div>
+  <div class="achv-toast" id="achv-toast" role="status"></div>
   <script src="js/data.js"></script>
+  <script src="js/story.js"></script>
   <script src="js/game.js"></script>
 </body>
 </html>

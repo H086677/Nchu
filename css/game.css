@@ -72,6 +72,28 @@
 .gs-item.bump{background:#fdf6e6;transform:scale(1.035)}
 .gs-item.bump b{color:var(--gold)}
 
+/* ---------- 学业风险 ---------- */
+.risk-box .side-label{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.risk-box .side-label em{
+  font:700 10px/1 var(--serif);font-style:normal;letter-spacing:1px;
+  color:#3f7a51;text-transform:none;
+}
+.risk-box.warn .side-label em{color:#a5762a}
+.risk-box.danger .side-label em{color:#9a5a52}
+.risk-track{
+  height:6px;border-radius:4px;background:#e6eef3;overflow:hidden;margin-bottom:11px;
+}
+.risk-track i{
+  display:block;height:100%;width:0;border-radius:4px;
+  background:linear-gradient(90deg,#4a8f66,#7fae5a);
+  transition:width .5s ease,background .35s ease;
+}
+.risk-box.warn .risk-track i{background:linear-gradient(90deg,#c9a24a,#d8a13c)}
+.risk-box.danger .risk-track i{background:linear-gradient(90deg,#c07a4e,#b4534a)}
+.risk-note-text{font-size:10px;line-height:1.7;color:#93a0ac}
+.risk-box.warn{border-color:#e2d3b0}
+.risk-box.danger{border-color:#e0c0ba;background:#fdf7f6}
+
 /* ---------- 事件区 ---------- */
 .game-main{min-height:430px}
 .event-card{
@@ -162,6 +184,16 @@
 .delta-chip svg{width:11px;height:11px}
 .delta-chip.minus{background:#fbf0ef;border-color:#ecd5d1;color:#9a5a52}
 
+/* ---------- 结算里的风险提示 ---------- */
+.risk-note{
+  display:block;margin-top:13px;padding:7px 12px;border-radius:5px;
+  background:#fdf2f0;border-left:3px solid #b4534a;
+  font:400 10.5px/1.6 var(--serif);letter-spacing:.3px;color:#9a5a52;
+}
+.risk-note.down{
+  background:#f1f8f2;border-left-color:#4a8f66;color:#3f7a51;
+}
+
 /* ---------- 社团招新 ---------- */
 .club-option{
   display:flex;gap:15px;align-items:flex-start;width:100%;text-align:left;
@@ -225,6 +257,30 @@
   text-align:left;border-top:1px dashed var(--line);padding-top:18px;
   margin-bottom:24px;display:flex;flex-direction:column;gap:11px;
 }
+
+/* 学期小结里的风险条 */
+.summary-risk{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;
+  margin-bottom:22px;padding:11px 14px;border-radius:7px;background:#f2f6f9;
+  text-align:left;
+}
+.sr-label{
+  font:400 10px/1 var(--serif);letter-spacing:1.4px;color:var(--muted);white-space:nowrap;
+}
+.sr-track{height:5px;border-radius:3px;background:#e0e9ef;overflow:hidden}
+.sr-track i{
+  display:block;height:100%;border-radius:3px;
+  background:linear-gradient(90deg,#4a8f66,#7fae5a);transition:width .5s ease;
+}
+.sr-value{
+  font:700 10px/1 Georgia,serif;color:#4a8f66;white-space:nowrap;letter-spacing:.4px;
+}
+.summary-risk.warn{background:#fdf6e6}
+.summary-risk.warn .sr-track i{background:linear-gradient(90deg,#c9a24a,#d8a13c)}
+.summary-risk.warn .sr-value{color:#a5762a}
+.summary-risk.danger{background:#fdf2f0}
+.summary-risk.danger .sr-track i{background:linear-gradient(90deg,#c07a4e,#b4534a)}
+.summary-risk.danger .sr-value{color:#9a5a52}
 .log-line{
   display:grid;grid-template-columns:8px 92px 1fr;gap:11px;align-items:baseline;
 }
@@ -268,6 +324,20 @@
   letter-spacing:.3px;text-align:left;
 }
 .ending-ticket{text-align:left}
+
+/* 结局页统计条 */
+.ending-meta{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin-top:20px;
+}
+.ending-meta .em-item{
+  display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:20px;
+  background:#f2f6f9;border:1px solid var(--line);
+  font:400 10.5px/1 var(--serif);letter-spacing:.6px;color:var(--muted);
+}
+.ending-meta .em-item svg{width:12px;height:12px;color:var(--gold)}
+.ending-card.bad .ending-icon{background:#fdf2f0;border-color:#e0c0ba;color:#9a5a52}
+.ending-card.bad .ending-label{color:#9a5a52}
+.ending-card.bad .ending-title{color:#8a4a44}
 .ending-highlights{
   margin-top:26px;text-align:left;border-top:1px dashed var(--line);
   padding-top:22px;
@@ -330,10 +400,23 @@
 .dark .verdict.bad{background:#3a2422;border-color:#5c3a35;color:#e0b4ae}
 .dark .delta-chip{background:#3a2f18;border-color:#5c4a24;color:var(--gold-light)}
 .dark .delta-chip.minus{background:#3a2422;border-color:#5c3a35;color:#e0b4ae}
+.dark .risk-note{background:#2a1e1d;border-left-color:#b4534a;color:#d9a49a}
+.dark .risk-note.down{background:#1c2c22;border-left-color:#4a8f66;color:#8fbf9c}
 .dark .summary-stats .gs-item{background:#ffffff0d}
 .dark .side-card-quiet{background:transparent}
 .dark .ending-icon{background:#3a2f18;border-color:#5c4a24;color:var(--gold-light)}
 .dark .log-dot{background:var(--gold-light)}
+.dark .risk-track{background:#1e3245}
+.dark .risk-note-text{color:#6e7f8f}
+.dark .risk-box.warn{border-color:#5c4a24}
+.dark .risk-box.danger{border-color:#5a3a36;background:#2a1e1d}
+.dark .summary-risk{background:#ffffff0d}
+.dark .summary-risk .sr-track{background:#1e3245}
+.dark .summary-risk.warn{background:#3a2f18}
+.dark .summary-risk.danger{background:#2a1e1d}
+.dark .ending-meta .em-item{background:#ffffff0d;border-color:#2d475c;color:#9aabba}
+.dark .ending-card.bad .ending-icon{background:#2a1e1d;border-color:#5a3a36;color:#d08a7e}
+.dark .ending-card.bad .ending-title{color:#d9a49a}
 
 /* ---------- 响应式 ---------- */
 @media(min-width:1500px){
@@ -353,6 +436,7 @@
   .game-stats{flex-direction:row;flex-wrap:wrap;gap:7px}
   .gs-item{grid-template-columns:14px auto auto;padding:6px 10px}
   .game-progress{flex:0 0 170px}
+  .risk-box{flex:1 1 100%}
 }
 
 @media(max-width:800px){
