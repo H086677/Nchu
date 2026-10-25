@@ -4,7 +4,7 @@
 
 ## 在线地址
 
-https://h086677.github.io/
+https://h086677.github.io/Nchu/me/
 
 人生模拟器（独立项目）：https://h086677.github.io/Nchu/
 
@@ -49,13 +49,17 @@ python -m http.server 8000
 
 ## 部署
 
-站点托管在 GitHub Pages，仓库 `H086677/H086677.github.io`，`main` 分支根目录直接发布。
+站点托管在 GitHub Pages，复用已有仓库 `H086677/Nchu` 的 Pages，本站源码位于该仓库的 `me/` 子目录，
+因此线上地址为 https://h086677.github.io/Nchu/me/ 。
 
-```bash
-git add .
-git commit -m "update"
-git push
-```
+更新方式（无 git 环境时用 GitHub REST API）：
+
+1. `GET /repos/H086677/Nchu/git/ref/heads/main` 拿到 base sha；
+2. 对每个文件 `POST /repos/H086677/Nchu/git/blobs`（base64 内容）；
+3. `POST /repos/H086677/Nchu/git/trees`（`base_tree` = base sha，路径统一加 `me/` 前缀）；
+4. `POST /repos/H086677/Nchu/git/commits`，再 `PATCH /repos/H086677/Nchu/git/refs/heads/main`。
+
+注意：`me/` 是子目录，页面内所有资源路径都必须是相对路径（当前实现已是相对路径）。
 
 ## 版权
 
