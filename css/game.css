@@ -1,0 +1,416 @@
+/* ==========================================================
+   赣江之畔启航指南 · 四年玩法
+   游戏页 / 结局页 / 社团招新 / 属性面板
+   在 main.css 之后加载，可覆盖同优先级规则
+   ========================================================== */
+
+/* ---------- 游戏页骨架 ---------- */
+.game-page{flex-direction:column;padding-bottom:40px}
+
+.game-bar{
+  width:100%;max-width:1120px;margin:0 auto;padding:22px 34px 16px;
+  display:flex;align-items:center;justify-content:space-between;gap:26px;
+  border-bottom:1px solid var(--line);
+}
+.game-term-box{display:flex;flex-direction:column;gap:3px;min-width:0}
+.game-term-label{
+  font:400 8px/1 var(--serif);letter-spacing:3px;color:var(--gold);
+  text-transform:uppercase;
+}
+.game-term-box strong{
+  font:700 19px/1.3 var(--serif);color:var(--navy);letter-spacing:1px;
+}
+.game-year{font:400 10px/1 var(--serif);letter-spacing:1.6px;color:var(--muted)}
+
+.game-progress{display:flex;align-items:center;gap:14px;flex:0 0 260px}
+.game-progress-track{
+  flex:1;height:3px;border-radius:2px;background:var(--line);overflow:hidden;
+}
+.game-progress-track i{
+  display:block;height:100%;width:0;border-radius:2px;
+  background:linear-gradient(90deg,var(--navy),var(--gold));
+  transition:width .5s cubic-bezier(.22,.61,.36,1);
+}
+.game-progress-text{
+  font:400 10px/1 Georgia,serif;letter-spacing:1.6px;color:var(--muted);
+  white-space:nowrap;
+}
+
+.game-body{
+  width:100%;max-width:1120px;margin:0 auto;padding:26px 34px 0;
+  display:grid;grid-template-columns:214px minmax(0,1fr);gap:30px;align-items:start;
+}
+
+/* ---------- 左侧属性栏 ---------- */
+.game-side{position:sticky;top:18px;display:flex;flex-direction:column;gap:14px}
+.side-card{
+  background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px 16px;box-shadow:var(--shadow);
+}
+.side-card-quiet{box-shadow:none;background:transparent;border-style:dashed}
+.side-label{
+  display:block;font:400 9px/1 var(--serif);letter-spacing:2.4px;
+  color:var(--gold);text-transform:uppercase;margin-bottom:13px;
+}
+.side-note{
+  margin:0;font:400 11px/1.85 var(--serif);color:var(--muted);
+}
+.game-stats{display:flex;flex-direction:column;gap:9px}
+.gs-item{
+  display:grid;grid-template-columns:16px 1fr auto;align-items:center;gap:8px;
+  padding:7px 9px;border-radius:6px;background:#f2f6f9;
+  transition:background .25s ease,transform .25s ease;
+}
+.gs-item svg{width:14px;height:14px;color:var(--navy-2)}
+.gs-item em{
+  font:400 11px/1 var(--serif);font-style:normal;letter-spacing:.6px;
+  color:var(--text);
+}
+.gs-item b{
+  font:700 14px/1 Georgia,serif;color:var(--navy);
+}
+.gs-item.bump{background:#fdf6e6;transform:scale(1.035)}
+.gs-item.bump b{color:var(--gold)}
+
+/* ---------- 事件区 ---------- */
+.game-main{min-height:430px}
+.event-card{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:30px 32px 26px;box-shadow:var(--shadow);
+  animation:cardIn .45s cubic-bezier(.22,.61,.36,1) both;
+}
+.event-head{
+  display:flex;align-items:center;gap:12px;margin-bottom:16px;
+}
+.event-icon{
+  width:40px;height:40px;flex:0 0 40px;border-radius:10px;
+  display:grid;place-items:center;
+  background:#edf3f8;border:1px solid #dce7f0;color:var(--navy-2);
+}
+.event-icon svg{width:19px;height:19px}
+.event-meta{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+.event-club{
+  font:700 11px/1 var(--serif);letter-spacing:1px;color:var(--gold);
+}
+.event-tag{
+  font:400 10px/1.4 var(--serif);letter-spacing:.8px;color:var(--muted);
+}
+.event-count{
+  font:400 9px/1 Georgia,serif;letter-spacing:1.4px;color:var(--muted);
+  white-space:nowrap;
+}
+.event-title{
+  margin:0 0 14px;font:700 25px/1.35 var(--serif);
+  color:var(--navy);letter-spacing:2px;
+}
+.event-text{
+  margin:0 0 24px;font:400 13.5px/2.05 var(--serif);color:var(--text);
+  letter-spacing:.3px;
+}
+
+/* ---------- 选项 ---------- */
+.event-choices{display:flex;flex-direction:column;gap:10px}
+.choice-button{
+  display:flex;flex-direction:column;align-items:flex-start;gap:5px;
+  width:100%;text-align:left;cursor:pointer;
+  padding:15px 18px;border-radius:8px;
+  border:1px solid var(--line);background:#fbfcfd;
+  font-family:inherit;
+  transition:border-color .22s ease,background .22s ease,transform .22s ease;
+}
+.choice-button:hover{
+  border-color:var(--navy-2);background:#f4f8fb;transform:translateX(2px);
+}
+.choice-button:active{transform:translateX(0) scale(.995)}
+.choice-label{
+  font:400 13.5px/1.6 var(--serif);color:var(--text);letter-spacing:.3px;
+}
+.choice-hint{
+  font:400 9.5px/1.5 var(--serif);letter-spacing:1.1px;color:var(--muted);
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+}
+.choice-button.ghost{
+  border-style:dashed;background:transparent;
+}
+
+/* ---------- 检定结果 ---------- */
+.outcome{padding-top:4px}
+.outcome.failed .outcome-text{color:#7c5a5a}
+.verdict-row{display:flex;align-items:center;gap:11px;margin-bottom:13px;flex-wrap:wrap}
+.verdict{
+  font:700 9.5px/1 var(--serif);letter-spacing:2px;
+  padding:6px 11px;border-radius:4px;
+}
+.verdict.ok{background:#eef7f0;color:#3f7a51;border:1px solid #cfe6d6}
+.verdict.bad{background:#fbf0ef;color:#9a5a52;border:1px solid #ecd5d1}
+.verdict-detail{
+  font:400 10px/1 Georgia,serif;letter-spacing:.9px;color:var(--muted);
+}
+.outcome-text{
+  margin:0 0 16px;font:400 13.5px/2.05 var(--serif);color:var(--text);
+  letter-spacing:.3px;
+}
+.outcome .primary-button{margin-top:18px}
+
+/* ---------- 效果 / 增减标签 ---------- */
+.delta-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 8px;border-radius:4px;font:400 9.5px/1 var(--serif);
+  letter-spacing:.7px;
+  background:#faf6ec;border:1px solid #e8dcc4;color:#9a7736;
+}
+.delta-chip svg{width:11px;height:11px}
+.delta-chip.minus{background:#fbf0ef;border-color:#ecd5d1;color:#9a5a52}
+
+/* ---------- 社团招新 ---------- */
+.club-option{
+  display:flex;gap:15px;align-items:flex-start;width:100%;text-align:left;
+  padding:16px 18px;border-radius:9px;cursor:pointer;
+  border:1px solid var(--line);background:#fbfcfd;font-family:inherit;
+  transition:border-color .22s ease,background .22s ease,transform .22s ease;
+}
+.club-option:hover{
+  border-color:var(--gold);background:#fffdf8;transform:translateX(2px);
+}
+.club-icon{
+  width:40px;height:40px;flex:0 0 40px;border-radius:10px;
+  display:grid;place-items:center;
+  background:#edf3f8;border:1px solid #dce7f0;color:var(--navy-2);
+}
+.club-icon svg{width:18px;height:18px}
+.club-body{display:flex;flex-direction:column;gap:4px;min-width:0}
+.club-name{
+  font:700 14px/1.3 var(--serif);color:var(--navy);letter-spacing:1px;
+}
+.club-en{
+  font:400 8px/1 Georgia,serif;letter-spacing:1.7px;color:var(--gold);
+  text-transform:uppercase;
+}
+.club-desc{
+  font:400 11.5px/1.85 var(--serif);color:var(--muted);margin-top:2px;
+}
+.club-tag{
+  font:400 9px/1.4 var(--serif);letter-spacing:.9px;color:#9aa7b2;
+}
+.club-body .effect-row{margin-top:5px}
+
+/* ---------- 学期小结 ---------- */
+.term-summary{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:34px 34px 28px;box-shadow:var(--shadow);text-align:center;
+  animation:cardIn .45s cubic-bezier(.22,.61,.36,1) both;
+}
+.summary-label{
+  display:block;font:400 9px/1 Georgia,serif;letter-spacing:3.4px;
+  color:var(--gold);text-transform:uppercase;margin-bottom:13px;
+}
+.term-summary h3{
+  margin:0 0 8px;font:700 26px/1.35 var(--serif);color:var(--navy);
+  letter-spacing:2.5px;
+}
+.summary-sub{
+  margin:0 0 22px;font:400 11px/1.6 var(--serif);letter-spacing:1.4px;
+  color:var(--muted);
+}
+.summary-stats{
+  display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:24px;
+}
+.summary-stats .gs-item{
+  display:flex;gap:6px;padding:6px 11px;background:#f2f6f9;
+}
+.summary-stats .gs-item em{font-size:10px}
+.summary-stats .gs-item b{font-size:12px}
+
+.summary-log{
+  text-align:left;border-top:1px dashed var(--line);padding-top:18px;
+  margin-bottom:24px;display:flex;flex-direction:column;gap:11px;
+}
+.log-line{
+  display:grid;grid-template-columns:8px 92px 1fr;gap:11px;align-items:baseline;
+}
+.log-dot{
+  width:5px;height:5px;border-radius:50%;background:var(--gold);
+  align-self:center;justify-self:center;
+}
+.log-title{
+  font:700 10.5px/1.5 var(--serif);color:var(--navy);letter-spacing:.6px;
+}
+.log-text{
+  font:400 11.5px/1.75 var(--serif);color:var(--muted);
+}
+
+/* ---------- 结局页 ---------- */
+.ending-page{flex-direction:column;padding-bottom:44px}
+.ending-card{
+  max-width:640px;margin:0 auto;padding:44px 34px 34px;text-align:center;
+  animation:pageIn .55s ease both;
+}
+.ending-icon{
+  width:76px;height:76px;margin:0 auto 20px;border-radius:50%;
+  display:grid;place-items:center;
+  background:#f5f0e6;border:1px solid #e9dcc3;color:#ad7a19;
+}
+.ending-icon svg{width:34px;height:34px}
+.ending-label{
+  display:block;font:400 9px/1 Georgia,serif;letter-spacing:3.6px;
+  color:var(--gold);text-transform:uppercase;margin-bottom:14px;
+}
+.ending-card h2{
+  margin:0 0 8px;font:900 40px/1.3 var(--serif);color:var(--navy);
+  letter-spacing:7px;
+}
+.ending-en{
+  margin:0 0 4px;font:400 9.5px/1 Georgia,serif;letter-spacing:3px;
+  color:var(--gold);text-transform:uppercase;
+}
+.ending-text{
+  margin:26px 0 30px;font:400 13.5px/2.15 var(--serif);color:var(--text);
+  letter-spacing:.3px;text-align:left;
+}
+.ending-ticket{text-align:left}
+.ending-highlights{
+  margin-top:26px;text-align:left;border-top:1px dashed var(--line);
+  padding-top:22px;
+}
+.ending-highlights ul{
+  list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;
+}
+.ending-highlights li{
+  display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:baseline;
+}
+.el-term{
+  font:400 9px/1 Georgia,serif;letter-spacing:1.2px;color:var(--gold);
+  text-transform:uppercase;white-space:nowrap;
+}
+.el-text{
+  font:400 11.5px/1.8 var(--serif);color:var(--muted);
+}
+.ending-actions{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px;
+}
+
+/* ---------- 彩蛋：锁定专业 ---------- */
+.major-card.locked{
+  opacity:.34;cursor:not-allowed;filter:grayscale(.6);
+  pointer-events:none;
+}
+.major-card.locked .major-check{display:none}
+/* 彩蛋锁定后，唯一可选的那张卡呼吸高亮 */
+.major-card.locked-highlight{
+  opacity:1;filter:none;border-color:var(--gold);
+  box-shadow:0 0 0 3px #bd8e3f33,0 18px 40px #bd8e3f22;
+  animation:lockGlow 1.2s ease-in-out infinite alternate;
+}
+@keyframes lockGlow{
+  from{box-shadow:0 0 0 3px #bd8e3f22,0 18px 40px #bd8e3f11}
+  to{box-shadow:0 0 0 6px #bd8e3f3d,0 22px 48px #bd8e3f33}
+}
+
+/* ---------- 深色主题 ---------- */
+.dark .gs-item{background:#ffffff0d}
+.dark .gs-item em{color:#c3d2df}
+.dark .gs-item b{color:#e3ecf5}
+.dark .gs-item.bump{background:#3a2f18}
+.dark .gs-item.bump b{color:var(--gold)}
+.dark .event-icon,
+.dark .club-icon{background:#ffffff0d;border-color:#2d475c;color:var(--gold-light)}
+.dark .choice-button,
+.dark .club-option{background:#ffffff08;border-color:#2d475c}
+.dark .choice-button:hover{background:#ffffff12;border-color:var(--gold)}
+.dark .club-option:hover{background:#ffffff12;border-color:var(--gold)}
+.dark .choice-label{color:#dbe6f0}
+.dark .event-title,
+.dark .term-summary h3,
+.dark .ending-card h2{color:#e3ecf5}
+.dark .event-text,
+.dark .outcome-text,
+.dark .ending-text{color:#cdd9e5}
+.dark .outcome.failed .outcome-text{color:#e0b4ae}
+.dark .verdict.ok{background:#1b3324;border-color:#2c5540;color:#8fc7a4}
+.dark .verdict.bad{background:#3a2422;border-color:#5c3a35;color:#e0b4ae}
+.dark .delta-chip{background:#3a2f18;border-color:#5c4a24;color:var(--gold-light)}
+.dark .delta-chip.minus{background:#3a2422;border-color:#5c3a35;color:#e0b4ae}
+.dark .summary-stats .gs-item{background:#ffffff0d}
+.dark .side-card-quiet{background:transparent}
+.dark .ending-icon{background:#3a2f18;border-color:#5c4a24;color:var(--gold-light)}
+.dark .log-dot{background:var(--gold-light)}
+
+/* ---------- 响应式 ---------- */
+@media(min-width:1500px){
+  .game-bar,.game-body{max-width:1180px}
+}
+
+@media(max-width:1100px){
+  .game-body{grid-template-columns:186px minmax(0,1fr);gap:24px}
+  .game-bar{padding-left:26px;padding-right:26px}
+  .game-body{padding-left:26px;padding-right:26px}
+}
+
+@media(max-width:900px){
+  .game-body{grid-template-columns:1fr;gap:18px}
+  .game-side{position:static;flex-direction:row;flex-wrap:wrap;gap:12px}
+  .game-side .side-card{flex:1 1 260px}
+  .game-stats{flex-direction:row;flex-wrap:wrap;gap:7px}
+  .gs-item{grid-template-columns:14px auto auto;padding:6px 10px}
+  .game-progress{flex:0 0 170px}
+}
+
+@media(max-width:800px){
+  .game-bar{padding:18px 20px 13px;gap:16px}
+  .game-body{padding:20px 20px 0}
+  .event-card{padding:24px 22px 22px}
+  .event-title{font-size:21px;letter-spacing:1.4px}
+  .event-text,.outcome-text{font-size:12.5px;line-height:1.95}
+  .choice-label{font-size:12.5px}
+  .term-summary{padding:26px 22px 22px}
+  .term-summary h3{font-size:21px}
+  .ending-card{padding:32px 22px 26px}
+  .ending-card h2{font-size:32px;letter-spacing:5px}
+  .ending-text{font-size:12.5px;line-height:2}
+}
+
+@media(max-width:540px){
+  .game-bar{
+    flex-direction:column;align-items:stretch;gap:12px;
+    padding:16px 16px 12px;
+  }
+  .game-term-box strong{font-size:16px}
+  .game-progress{flex:1 1 auto;width:100%}
+  .game-body{padding:16px 16px 0;gap:14px}
+  .game-side .side-card{flex:1 1 100%;padding:14px 13px}
+  .game-stats{gap:6px}
+  .gs-item{padding:5px 8px;gap:6px}
+  .gs-item em{font-size:10px}
+  .gs-item b{font-size:12px}
+  .event-card{padding:20px 16px 18px;border-radius:10px}
+  .event-title{font-size:18px;letter-spacing:1px}
+  .event-text,.outcome-text{font-size:12px;line-height:1.9}
+  .event-icon,.club-icon{width:34px;height:34px;flex-basis:34px;border-radius:8px}
+  .event-icon svg,.club-icon svg{width:16px;height:16px}
+  .choice-button,.club-option{padding:13px 14px}
+  .choice-label{font-size:12px}
+  .choice-hint{font-size:9px}
+  .club-desc{font-size:10.5px}
+  .term-summary{padding:22px 16px 18px}
+  .term-summary h3{font-size:18px;letter-spacing:1.6px}
+  .summary-stats .gs-item{padding:5px 9px}
+  .log-line{grid-template-columns:7px 74px 1fr;gap:8px}
+  .log-title{font-size:9.5px}
+  .log-text{font-size:10.5px}
+  .ending-card{padding:26px 16px 22px}
+  .ending-card h2{font-size:26px;letter-spacing:3px}
+  .ending-icon{width:62px;height:62px;margin-bottom:16px}
+  .ending-icon svg{width:28px;height:28px}
+  .ending-text{font-size:12px;line-height:1.95}
+  .ending-highlights li{grid-template-columns:46px 1fr;gap:9px}
+  .el-text{font-size:10.5px}
+  .ending-actions{flex-direction:column}
+  .ending-actions .primary-button,
+  .ending-actions .secondary-button{width:100%}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .event-card,.term-summary,.ending-card{animation:none}
+  .game-progress-track i{transition:none}
+  .major-card.locked-highlight{animation:none;box-shadow:0 0 0 4px #bd8e3f3d}
+}

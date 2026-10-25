@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#092c54">
-  <meta name="description" content="南昌航空大学校园人生模拟器——写下名字，选择专业与天赋，开启你的蓝天旅程。">
-  <title>昌航逐梦指南 · 南昌航空大学校园人生</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="赣江之畔启航指南——南昌航空大学校园人生模拟器。写下名字，选择专业，开启你的蓝天旅程。">
+  <title>赣江之畔启航指南 · 南昌航空大学校园人生</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/game.css">
 </head>
 <body>
   <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -14,7 +15,6 @@
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
     <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5m6 6-6-6 6-6"/></symbol>
     <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M6.1 7a7 7 0 0 1 11.4-1L20 9M4 15l2.5 3A7 7 0 0 0 18 17"/></symbol>
-    <symbol id="i-dice" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 8h.01M16 8h.01M12 12h.01M8 16h.01M16 16h.01"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
     <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></symbol>
     <symbol id="i-wing" viewBox="0 0 24 24"><path d="M3 17c6-1 9-6 10-13 4 4 4 8 2 11l6-4c-2 7-8 10-18 6Z"/></symbol>
@@ -26,11 +26,43 @@
     <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 14A9 9 0 0 1 10 3.5 9 9 0 1 0 20.5 14Z"/></symbol>
     <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10.5 5 8 4.5 5 4.5v13c3 0 5.5.5 7 2 1.5-1.5 4-2 7-2v-13c-3 0-5.5.5-7 2Z"/><path d="M12 6.5v13"/></symbol>
+    <symbol id="i-tool" viewBox="0 0 24 24"><path d="M15.6 3a5.5 5.5 0 0 0-5.1 7.4L3 17.9 6.1 21l7.5-7.5A5.5 5.5 0 1 0 15.6 3Z"/><circle cx="16.3" cy="7.7" r="1.5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v6c0 4.4 3.1 8 7.5 9 4.4-1 7.5-4.6 7.5-9V6Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M2 12h4l3-8 4 16 3-8h6"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M4 20c0-9 6-15 16-16 1 10-5 16-13 16Z"/><path d="M9 15c2-3 4-5 8-6"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></symbol>
+    <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 4v16M7 20h10M4 8h16"/><path d="m8 8-3.5 6h7Zm8 0-3.5 6h7Z"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 1 9-9c0 2-1.6 3-3.2 3H16a2 2 0 0 0-1.4 3.4c.6.7.2 2.6-2.6 2.6Z"/><circle cx="8.5" cy="9.5" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="15.5" cy="9.5" r="1"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-medal" viewBox="0 0 24 24"><path d="M8.5 3h7l-2 6h-3Z"/><circle cx="12" cy="15" r="6"/><path d="m10 15 1.5 1.5L14.5 13"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2-5.5-2.9-5.5 2.9 1-6.2L3 9.6l6.2-.9Z"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4Z"/><path d="M14 6v12"/></symbol>
+    <symbol id="i-drone" viewBox="0 0 24 24"><rect x="9" y="9" width="6" height="6" rx="1.5"/><path d="M9 9 5.5 5.5M15 9l3.5-3.5M9 15l-3.5 3.5M15 15l3.5 3.5"/><circle cx="4.5" cy="4.5" r="2"/><circle cx="19.5" cy="4.5" r="2"/><circle cx="4.5" cy="19.5" r="2"/><circle cx="19.5" cy="19.5" r="2"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 22c4 0 6.5-2.7 6.5-6.2 0-4.4-4-6.3-3.2-11.8-3 1.4-4.6 4-4.6 6.2 0 1.6.8 2.4.8 3.4 0 1-.8 1.7-1.6 1.2-.9-.6-1.4-1.7-1.4-3-1.3 1.4-2 3.2-2 4.9C6.5 19.4 8.6 22 12 22Z"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><path d="M10.3 2.6h3.4l.5 2.5 1.7 1 2.4-.9 1.7 3-1.9 1.7v2l1.9 1.7-1.7 3-2.4-.9-1.7 1-.5 2.5h-3.4l-.5-2.5-1.7-1-2.4.9-1.7-3 1.9-1.7v-2L3.9 8.2l1.7-3 2.4.9 1.7-1Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7Z"/><path d="M3.5 7 12 11.5 20.5 7M12 11.5v10"/></symbol>
+    <symbol id="i-weld" viewBox="0 0 24 24"><path d="M4 20 14 10"/><path d="M14 10a3.5 3.5 0 1 0 5 5l-5-5Z"/><path d="M17 3.5 15.5 6m5.5 1-2.6.6M20 12h-2.6"/></symbol>
+    <symbol id="i-atom" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="9.5" ry="4"/><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(120 12 12)"/></symbol>
+    <symbol id="i-signal" viewBox="0 0 24 24"><path d="M4 20V13m5 7V9m5 11V5m5 15v-4"/><circle cx="4" cy="9" r="1.4"/><circle cx="19" cy="8" r="1.4"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12Z"/></symbol>
+    <symbol id="i-neural" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><path d="M6.8 6.9 10.3 11M6.8 17.1 10.3 13M13.8 12h3.4"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2.5" y="3.5" width="19" height="13" rx="2"/><path d="M8 20.5h8M12 16.5v4"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M3 8V5.5A2.5 2.5 0 0 1 5.5 3H8m8 0h2.5A2.5 2.5 0 0 1 21 5.5V8m0 8v2.5a2.5 2.5 0 0 1-2.5 2.5H16M8 21H5.5A2.5 2.5 0 0 1 3 18.5V16"/><path d="M3 12h18"/></symbol>
+    <symbol id="i-draft" viewBox="0 0 24 24"><path d="M4 20l1.1-4.1L15.9 5.1a2 2 0 0 1 2.8 0l.2.2a2 2 0 0 1 0 2.8L8.1 18.9Z"/><path d="m14.6 6.4 3 3"/><path d="M4 20l4.1-1.1"/></symbol>
+    <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6.5v11M14.8 9.2c-.7-.9-1.8-1.4-2.9-1.4-1.6 0-2.7.9-2.7 2.2 0 3 5.6 1.5 5.6 4.5 0 1.4-1.2 2.3-2.9 2.3-1.3 0-2.4-.6-3.1-1.6"/></symbol>
+    <symbol id="i-lang" viewBox="0 0 24 24"><path d="M3 5.5h9M7.5 3.5v2M10.5 5.5c0 4-2.6 7.4-6.5 8.8"/><path d="M5 9.5c1.4 2.6 3.6 4.4 6.2 5"/><path d="m13 20.5 4-11 4 11M14.4 17h5.2"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5.5v13M5.5 12h13"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5.5 12h13"/></symbol>
+    <symbol id="i-dice" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3.5"/><circle cx="8.6" cy="8.6" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.4" cy="15.4" r="1.2" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-bowl" viewBox="0 0 24 24"><path d="M3 11h18a9 9 0 0 1-18 0Z"/><path d="M8 11V7m4 4V5m4 6V7"/><path d="M4 20h16"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M5 4.5h9l5 5V19.5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-14a1 1 0 0 1 1-1Z"/><path d="M14 4.5v5h5M8 13h8M8 16.5h5"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="5.5" r="2.5"/><path d="M8 18.5h7a3.5 3.5 0 0 0 0-7h-6a3.5 3.5 0 0 1 0-7h7"/></symbol>
   </svg>
 
   <div class="sky" aria-hidden="true"><div class="cloud cloud-one"></div><div class="cloud cloud-two"></div></div>
   <header class="site-header">
-    <a class="brand" href="./" aria-label="返回昌航逐梦指南首页">
+    <a class="brand" href="./" aria-label="返回赣江之畔启航指南首页">
       <span class="brand-mark"><img src="assets/nchu-emblem.png" alt="南昌航空大学校徽" width="90" height="90"></span>
       <span><strong>南昌航空大学</strong><small>NANCHANG HANGKONG UNIVERSITY</small></span>
     </a>
@@ -43,47 +75,210 @@
         <div class="edition-label"><span></span> CAMPUS LIFE SIMULATOR <span></span></div>
         <div class="hero-emblem" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><svg><use href="#i-plane"/></svg><i class="star-one">✦</i><i class="star-two">✧</i></div>
         <p class="university-name">南昌航空大学 · 校园人生模拟器</p>
-        <h1 id="main-title">昌航逐梦指南</h1>
-        <p class="english-title">YOUR FLIGHT, YOUR FUTURE.</p>
+        <h1 id="main-title">赣江之畔启航指南</h1>
+        <p class="english-title">NO.1952 GRADUATION GUIDE</p>
         <div class="title-rule"><span></span><i>✦</i><span></span></div>
         <p class="intro">从卧龙湖畔，到更辽阔的天空。<br>你的昌航故事，从这里起飞。</p>
         <form class="name-form" id="name-form">
           <label for="username">写下你的名字</label>
           <div class="name-field"><input id="username" name="username" type="text" maxlength="12" placeholder="未来的昌航人，怎么称呼你？" autocomplete="nickname" aria-describedby="name-error"><svg><use href="#i-plane"/></svg></div>
           <p class="form-error" id="name-error" role="alert"></p>
-          <button class="primary-button" type="submit">开启我的大学旅程<svg><use href="#i-arrow"/></svg></button>
+          <button class="primary-button" type="submit">开始人生<svg><use href="#i-arrow"/></svg></button>
         </form>
-        <p class="start-note"><svg><use href="#i-spark"/></svg> 每一段青春，都有无限可能</p>
+        <p class="start-note"><svg><use href="#i-spark"/></svg><span id="start-note-text">1952 — 2026 · 七十四载航空报国路</span></p>
+        <div class="start-links">
+          <button class="link-button" type="button" data-goto="archive"><svg><use href="#i-clock"/></svg>校史图鉴</button>
+          <i></i>
+          <button class="link-button" type="button" data-goto="achievements"><svg><use href="#i-medal"/></svg>成就收集</button>
+        </div>
       </div>
       <div class="campus-line" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
     </section>
 
-    <section class="page selection-page" id="major-page" aria-labelledby="major-title" hidden>
-      <nav class="progress-nav" aria-label="创建角色进度"><button class="back-button" data-back="start" type="button"><svg><use href="#i-back"/></svg> 返回</button><ol><li class="complete"><span><svg><use href="#i-check"/></svg></span>名字</li><li class="current"><span>2</span>专业</li><li><span>3</span>天赋</li></ol><span class="step-count">01 / 02</span></nav>
+    <section class="page selection-page allocate-page" id="allocate-page" aria-labelledby="allocate-title" hidden>
+      <nav class="progress-nav" aria-label="创建角色进度">
+        <button class="back-button" data-back="start" type="button"><svg><use href="#i-back"/></svg> 返回</button>
+        <ol><li class="complete"><span><svg><use href="#i-check"/></svg></span>名字</li><li class="current"><span>2</span>属性</li><li><span>3</span>专业</li><li><span>4</span>天赋</li><li><span>5</span>启航</li></ol>
+        <span class="step-count">01 / 04</span>
+      </nav>
       <div class="page-content">
-        <p class="section-eyebrow">CHOOSE YOUR PATH</p><h2 id="major-title">选择你的专业</h2><p class="section-subtitle">每一份热爱，都是通往未来的一张登机牌</p>
-        <div class="major-grid" id="major-grid"></div>
-        <div class="selection-footer"><p id="major-hint">点击专业卡片，继续抽取你的专属天赋</p><button class="primary-button compact" id="major-next" type="button" disabled>下一站：抽取天赋<svg><use href="#i-arrow"/></svg></button></div>
+        <p class="section-eyebrow">ALLOCATE YOUR POINTS</p>
+        <h2 id="allocate-title">分配你的初始属性</h2>
+        <p class="section-subtitle" id="allocate-subtitle">十点自由分配 · 每项最多加五点</p>
+        <div class="allocate-board">
+          <div class="pool-badge">
+            <span class="pool-label">剩余点数 / REMAINING</span>
+            <strong id="stat-pool">10</strong>
+          </div>
+          <div class="allocate-list" id="allocate-list"></div>
+        </div>
+        <div class="selection-footer">
+          <p id="allocate-hint">十点全部分配完毕才能继续</p>
+          <div class="talent-actions">
+            <button class="secondary-button" id="allocate-reset" type="button"><svg><use href="#i-refresh"/></svg>重新分配</button>
+            <button class="primary-button compact" id="allocate-next" type="button" disabled>确认属性，选择专业<svg><use href="#i-arrow"/></svg></button>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="page selection-page" id="talent-page" aria-labelledby="talent-title" hidden>
-      <nav class="progress-nav" aria-label="创建角色进度"><button class="back-button" data-back="major" type="button"><svg><use href="#i-back"/></svg> 返回</button><ol><li class="complete"><span><svg><use href="#i-check"/></svg></span>名字</li><li class="complete"><span><svg><use href="#i-check"/></svg></span>专业</li><li class="current"><span>3</span>天赋</li></ol><span class="step-count">02 / 02</span></nav>
-      <div class="page-content talent-content">
-        <p class="section-eyebrow">A LITTLE EXTRA MAGIC</p><h2 id="talent-title">抽取你的初始天赋</h2><p class="section-subtitle">小小的特别之处，将陪你走过四年大学时光</p>
+    <section class="page selection-page" id="major-page" aria-labelledby="major-title" hidden>
+      <nav class="progress-nav" aria-label="创建角色进度">
+        <button class="back-button" data-back="allocate" type="button"><svg><use href="#i-back"/></svg> 返回</button>
+        <ol><li class="complete"><span><svg><use href="#i-check"/></svg></span>名字</li><li class="complete"><span><svg><use href="#i-check"/></svg></span>属性</li><li class="current"><span>3</span>专业</li><li><span>4</span>天赋</li><li><span>5</span>启航</li></ol>
+        <span class="step-count">02 / 04</span>
+      </nav>
+      <div class="page-content">
+        <p class="section-eyebrow">CHOOSE YOUR PATH</p>
+        <h2 id="major-title">选择你的专业</h2>
+        <p class="section-subtitle">专业将影响你的初始属性加成</p>
+        <div class="major-grid" id="major-grid"></div>
+        <div class="selection-footer">
+          <p id="major-hint">点击专业卡片，领取属于你的登机牌</p>
+          <button class="primary-button compact" id="major-next" type="button" disabled>确认专业，抽取天赋<svg><use href="#i-arrow"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="page selection-page talent-page" id="talent-page" aria-labelledby="talent-title" hidden>
+      <nav class="progress-nav" aria-label="创建角色进度">
+        <button class="back-button" data-back="major" type="button"><svg><use href="#i-back"/></svg> 返回</button>
+        <ol><li class="complete"><span><svg><use href="#i-check"/></svg></span>名字</li><li class="complete"><span><svg><use href="#i-check"/></svg></span>属性</li><li class="complete"><span><svg><use href="#i-check"/></svg></span>专业</li><li class="current"><span>4</span>天赋</li><li><span>5</span>启航</li></ol>
+        <span class="step-count">03 / 04</span>
+      </nav>
+      <div class="page-content">
+        <p class="section-eyebrow">DRAW YOUR TALENTS</p>
+        <h2 id="talent-title">抽取你的天赋</h2>
+        <p class="section-subtitle" id="talent-subtitle">五张卡中挑两张带走 · 天赋将叠加到初始属性上</p>
         <div class="talent-grid" id="talent-grid"></div>
-        <div class="talent-actions"><button class="secondary-button" id="refresh-talents" type="button"><svg><use href="#i-refresh"/></svg>换一批 <span id="refresh-count">2</span></button><button class="secondary-button" id="random-talent" type="button"><svg><use href="#i-dice"/></svg>交给命运</button></div>
-        <button class="primary-button compact" id="talent-next" type="button" disabled>确认天赋，开启旅程<svg><use href="#i-arrow"/></svg></button>
-        <p class="selection-note" id="talent-hint">点击卡片，选择一项与你同行的好运</p>
+        <div class="selection-footer">
+          <p id="talent-hint">从五张卡中挑选两张</p>
+          <div class="talent-actions">
+            <button class="secondary-button" id="talent-redraw" type="button"><svg><use href="#i-refresh"/></svg>重新抽取</button>
+            <button class="primary-button compact" id="talent-next" type="button" disabled>确认天赋，领取登机牌<svg><use href="#i-arrow"/></svg></button>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="page coming-page" id="coming-page" aria-labelledby="coming-title" hidden>
-      <div class="coming-card"><div class="coming-icon"><svg><use href="#i-lock"/></svg></div><p class="section-eyebrow">TO BE CONTINUED</p><h2 id="coming-title">敬请期待</h2><div class="title-rule"><span></span><i>✦</i><span></span></div><p>你的大学旅程即将启航。<br>更多昌航故事，正在路上。</p><div class="profile-ticket"><span class="ticket-label">PASSENGER</span><strong id="profile-name"></strong><dl><div><dt>专业</dt><dd id="profile-major"></dd></div><div><dt>天赋</dt><dd id="profile-talent"></dd></div></dl><span class="ticket-code">NCHU · CLASS OF 2026</span></div><button class="primary-button" id="restart" type="button">重新启程<svg><use href="#i-refresh"/></svg></button></div>
+      <div class="coming-card">
+        <div class="coming-icon"><svg><use href="#i-lock"/></svg></div>
+        <p class="section-eyebrow">TO BE CONTINUED</p>
+        <h2 id="coming-title">敬请期待</h2>
+        <div class="title-rule"><span></span><i>✦</i><span></span></div>
+        <p class="coming-desc">你的大学旅程即将启航。<br>课堂、金工实习、航模队、图书馆的灯、赣江的夜风……<br>更多昌航故事，正在路上。</p>
+        <div class="profile-ticket">
+          <span class="ticket-label">PASSENGER · 乘客</span>
+          <strong id="profile-name"></strong>
+          <dl>
+            <div><dt>专业 / MAJOR</dt><dd id="profile-major"></dd></div>
+            <div><dt>学院 / SCHOOL</dt><dd id="profile-college"></dd></div>
+          </dl>
+          <div class="stat-strip" id="profile-stats"></div>
+          <div class="talent-strip" id="profile-talents"></div>
+          <span class="ticket-code">NCHU · CLASS OF 2026</span>
+        </div>
+        <div class="coming-actions">
+          <button class="secondary-button" id="restart" type="button"><svg><use href="#i-refresh"/></svg>重新启程</button>
+          <button class="secondary-button" data-goto="archive" type="button"><svg><use href="#i-clock"/></svg>校史图鉴</button>
+        </div>
+        <p class="coming-note">本作为同人向致敬作品，非学校官方产品</p>
+      </div>
+    </section>
+
+    <section class="page game-page" id="game-page" aria-labelledby="game-title" hidden>
+      <div class="game-bar">
+        <div class="game-term-box">
+          <span class="game-term-label">CURRENT TERM</span>
+          <strong id="game-term">大一 · 上学期</strong>
+          <span class="game-year" id="game-year">2026 秋</span>
+        </div>
+        <div class="game-progress">
+          <div class="game-progress-track"><i id="game-progress-bar"></i></div>
+          <span class="game-progress-text" id="game-progress-text">1 / 8</span>
+        </div>
+      </div>
+
+      <div class="game-body">
+        <aside class="game-side">
+          <div class="side-card">
+            <span class="side-label">你的属性</span>
+            <div class="game-stats" id="game-stats"></div>
+          </div>
+          <div class="side-card side-card-quiet">
+            <span class="side-label">本作说明</span>
+            <p class="side-note">属性检定 = 属性值 + 1d20，达到阈值即成功。属性与天赋会一路影响四年里的每一次选择。</p>
+          </div>
+        </aside>
+        <div class="game-main" id="event-stage" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="page ending-page" id="ending-page" aria-labelledby="ending-title" hidden>
+      <div class="ending-card">
+        <div class="ending-icon" id="ending-icon"></div>
+        <span class="ending-label" id="ending-label">ENDING</span>
+        <h2 id="ending-title"></h2>
+        <p class="ending-en" id="ending-en"></p>
+        <div class="title-rule"><span></span><i>✦</i><span></span></div>
+        <div class="ending-text" id="ending-text"></div>
+
+        <div class="profile-ticket ending-ticket">
+          <span class="ticket-label">PASSENGER · 毕业生</span>
+          <strong id="ending-name"></strong>
+          <dl>
+            <div><dt>专业 / MAJOR</dt><dd id="ending-major"></dd></div>
+            <div><dt>学院 / SCHOOL</dt><dd id="ending-college"></dd></div>
+            <div><dt>社团 / CLUB</dt><dd id="ending-club"></dd></div>
+          </dl>
+          <div class="stat-strip" id="ending-stats"></div>
+          <div class="talent-strip" id="ending-talents"></div>
+          <span class="ticket-code">NCHU · CLASS OF 2030</span>
+        </div>
+
+        <div class="ending-highlights">
+          <span class="side-label">四年里，你记得的几件事</span>
+          <ul id="ending-log"></ul>
+        </div>
+
+        <div class="ending-actions">
+          <button class="primary-button compact" id="ending-restart" type="button">再读一次大学<svg><use href="#i-refresh"/></svg></button>
+          <button class="secondary-button" id="ending-archive" type="button"><svg><use href="#i-clock"/></svg>校史图鉴</button>
+        </div>
+        <p class="coming-note">本作为同人向致敬作品，非学校官方产品</p>
+      </div>
+    </section>
+
+    <section class="page selection-page" id="archive-page" aria-labelledby="archive-title" hidden>
+      <nav class="progress-nav" aria-label="校史图鉴导航">
+        <button class="back-button" data-back="start" type="button"><svg><use href="#i-back"/></svg> 返回</button>
+        <span class="step-count">ARCHIVE</span>
+      </nav>
+      <div class="page-content">
+        <p class="section-eyebrow">SINCE 1952</p>
+        <h2 id="archive-title">校史图鉴</h2>
+        <p class="section-subtitle">七十四载，从汉口到前湖</p>
+        <ol class="timeline" id="timeline"></ol>
+      </div>
+    </section>
+
+    <section class="page selection-page" id="achievements-page" aria-labelledby="achievements-title" hidden>
+      <nav class="progress-nav" aria-label="成就收集导航">
+        <button class="back-button" data-back="start" type="button"><svg><use href="#i-back"/></svg> 返回</button>
+        <span class="step-count">ACHIEVEMENTS</span>
+      </nav>
+      <div class="page-content">
+        <p class="section-eyebrow">YOUR MILESTONES</p>
+        <h2 id="achievements-title">成就收集</h2>
+        <p class="section-subtitle">敬请期待 · 后续版本开放</p>
+        <div class="achv-grid" id="achv-grid"></div>
+      </div>
     </section>
   </main>
   <footer class="site-footer"><span>NCHU · 逐梦蓝天</span><i></i><span>日新自强 · 知行合一</span></footer>
   <div class="toast" id="toast" role="status"></div>
-  <script src="app.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/game.js"></script>
 </body>
 </html>
