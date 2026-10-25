@@ -154,6 +154,14 @@
 .choice-button.ghost{
   border-style:dashed;background:transparent;
 }
+/* 选项上的学业风险标签 */
+.choice-risk{
+  display:inline-flex;align-items:center;
+  font:400 9.5px/1.5 var(--serif);letter-spacing:.8px;
+  color:#9a5a52;background:#fdf2f0;border:1px solid #e6cfca;
+  padding:1px 7px;border-radius:3px;margin-top:1px;
+}
+.choice-risk.down{color:#3f7a51;background:#f1f8f2;border-color:#cbe3d4}
 
 /* ---------- 检定结果 ---------- */
 .outcome{padding-top:4px}
@@ -355,6 +363,10 @@
 .el-text{
   font:400 11.5px/1.8 var(--serif);color:var(--muted);
 }
+.ending-highlights li.el-empty{
+  display:block;text-align:center;
+  font:400 11.5px/1.8 var(--serif);color:var(--muted);letter-spacing:.4px;
+}
 .ending-actions{
   display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px;
 }
@@ -389,6 +401,8 @@
 .dark .choice-button:hover{background:#ffffff12;border-color:var(--gold)}
 .dark .club-option:hover{background:#ffffff12;border-color:var(--gold)}
 .dark .choice-label{color:#dbe6f0}
+.dark .choice-risk{background:#3a2422;border-color:#5c3a35;color:#e0b4ae}
+.dark .choice-risk.down{background:#1b3324;border-color:#2c5540;color:#8fc7a4}
 .dark .event-title,
 .dark .term-summary h3,
 .dark .ending-card h2{color:#e3ecf5}

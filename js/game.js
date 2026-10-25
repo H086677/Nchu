@@ -22,6 +22,7 @@
     ending: null,
     /* —— 风险与成就 —— */
     risk: 0,          /* 0-100，负面选择累加；学期末结算 */
+    warnings: 0,      /* 已收到的学业预警次数，第 2 次直接劝退 */
     counters: {},     /* 跨事件计数：library / allnighter / awards / club_events / playthroughs */
     unlocked: {}      /* 已解锁成就（跨局持久化） */
   };
@@ -500,6 +501,11 @@
   }
 
   /* ---------- 风险（学业预警 / 劝退） ---------- */
+  const RISK_WARN = 70;       /* 学期末 >= 70 触发一次学业预警 */
+  const RISK_EXPEL = 100;     /* 学期末 >= 100 直接劝退 */
+  const RISK_KEEP = 0.3;      /* 学期结束后风险按比例消退 */
+  const RISK_MAX_WARN = 3;    /* 累计 3 次预警 = 劝退 */
+
   function addRisk(delta) {
     if (!delta) return;
     state.risk = Math.max(0, Math.min(100, state.risk + delta));
@@ -511,43 +517,74 @@
     const box = $('risk-box');
     if (!bar || !box) return;
     bar.style.width = state.risk + '%';
-    box.classList.toggle('warn', state.risk >= 40 && state.risk < 70);
-    box.classList.toggle('danger', state.risk >= 70);
+    box.classList.toggle('warn', state.risk >= 45 && state.risk < RISK_WARN);
+    box.classList.toggle('danger', state.risk >= RISK_WARN);
     const label = $('risk-label');
     if (label) {
-      label.textContent = state.risk >= 70 ? '危险' : state.risk >= 40 ? '预警' : '正常';
+      label.textContent = state.risk >= RISK_WARN ? '危险' : state.risk >= 45 ? '预警' : '正常';
     }
   }
 
-  /* 学期末结算：60 分预警、100 分劝退 */
   function settleRisk() {
-    if (state.risk >= 100) {
+    if (state.risk >= RISK_EXPEL) {
       state.flags['expelled'] = true;
       return 'expelled';
     }
-    if (state.risk >= 60) {
+    if (state.risk >= RISK_WARN) {
+      state.warnings += 1;
       state.flags['probation'] = true;
+      /* 累计 3 次预警 = 累犯，直接劝退 */
+      if (state.warnings >= RISK_MAX_WARN) {
+        state.flags['expelled'] = true;
+        state.flags['repeat_offender'] = true;
+        return 'expelled';
+      }
       addStats({ 笃学: -1 });
-      state.risk = Math.max(0, state.risk - 25);
       pushLog({
         term: state.term, title: '学业预警',
-        text: '本学期累计不及格科目过多，学院下发了学业预警通知。', effects: { 笃学: -1 }
+        text: '本学期不及格学分超标，学院下发了第 ' + state.warnings + ' 次学业预警。' +
+          (state.warnings >= RISK_MAX_WARN - 1 ? '这是最后一次机会了。' : '再这样下去就要退学了。'),
+        effects: { 笃学: -1 }
       });
-      toast('收到学业预警 · 请立刻调整状态');
+      toast('收到第 ' + state.warnings + ' 次学业预警 · 累计 3 次将被劝退');
     }
+    /* 学期结束后压力自然消退，但会残留一部分 */
+    state.risk = Math.round(state.risk * RISK_KEEP);
     return null;
   }
 
   /* ---------- 随机事件 ---------- */
   function pickRandomEvent() {
     if (!RANDOM_EVENTS || !RANDOM_EVENTS.length) return null;
-    if (Math.random() > 0.55) return null;
+    if (Math.random() > 0.7) return null;
     const used = state.flags['random_used'] || [];
-    const pool = RANDOM_EVENTS.filter((e) => used.indexOf(e.id) < 0);
+    const seen = loadSeen();
+    let pool = RANDOM_EVENTS.filter((e) => used.indexOf(e.id) < 0);
     if (!pool.length) return null;
+    /* 优先抽还没见过的 */
+    const fresh = pool.filter((e) => seen.indexOf(e.id) < 0);
+    if (fresh.length) pool = fresh;
     const ev = pool[Math.floor(Math.random() * pool.length)];
     state.flags['random_used'] = used.concat([ev.id]);
     return Object.assign({}, ev, { random: true, tag: ev.tag || '随机事件' });
+  }
+
+  /* 把 RISK_CHOICES 里的摆烂选项并进事件（不修改原始数据） */
+  function withRiskChoice(ev) {
+    if (!RISK_CHOICES || !RISK_CHOICES[ev.id]) return ev;
+    const extra = RISK_CHOICES[ev.id];
+    if (!ev.choices) return ev;
+    return Object.assign({}, ev, { choices: ev.choices.concat([extra]) });
+  }
+
+  /* 洗牌 */
+  function shuffle(list) {
+    const arr = list.slice();
+    for (let i = arr.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr;
   }
   function renderStatPanel() {
     const panel = $('game-stats');
@@ -652,13 +689,19 @@
     }
 
     /* 普通事件：选项 */
-    box.innerHTML = ev.choices.map((choice, i) =>
-      '<button class="choice-button" type="button" data-choice="' + i + '">' +
+    box.innerHTML = ev.choices.map((choice, i) => {
+      const hint = choice.check
+        ? '<span class="choice-hint">检定 · ' + choice.check.stat + ' ' + choice.check.dc + '</span>'
+        : '<span class="choice-hint">' + effectChipsInline(choice.effects) + '</span>';
+      const riskTag = choice.risk
+        ? '<span class="choice-risk' + (choice.risk < 0 ? ' down' : '') + '">' +
+            '学业风险 ' + (choice.risk > 0 ? '+' : '') + choice.risk + '</span>'
+        : '';
+      return '<button class="choice-button" type="button" data-choice="' + i + '">' +
         '<span class="choice-label">' + choice.label + '</span>' +
-        (choice.check
-          ? '<span class="choice-hint">检定 · ' + choice.check.stat + ' ' + choice.check.dc + '</span>'
-          : '<span class="choice-hint">' + effectChipsInline(choice.effects) + '</span>') +
-      '</button>').join('');
+        hint + riskTag +
+      '</button>';
+    }).join('');
 
     box.querySelectorAll('[data-choice]').forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -745,12 +788,58 @@
     state.log.push(entry);
   }
 
+  /* ---------- 跨周目剧情记忆 ---------- */
+  const SEEN_KEY = 'nchu-seen';
+
+  function loadSeen() {
+    try {
+      const raw = localStorage.getItem(SEEN_KEY);
+      const arr = raw ? JSON.parse(raw) : [];
+      return Array.isArray(arr) ? arr : [];
+    } catch (e) { return []; }
+  }
+  function saveSeen(list) {
+    try { localStorage.setItem(SEEN_KEY, JSON.stringify(list.slice(-400))); } catch (e) { /* ignore */ }
+  }
+  function markSeen(id) {
+    const list = loadSeen();
+    if (list.indexOf(id) < 0) { list.push(id); saveSeen(list); }
+  }
+
   /* ---------- 学期事件队列 ---------- */
   function buildTermQueue() {
     const queue = [];
-    /* 主线事件 */
-    EVENTS.filter((ev) => ev.term === state.term).forEach((ev) => queue.push(ev));
-    /* 社团专属事件：第 1 / 3 / 5 学期各一次 */
+    const pool = EVENTS.filter((ev) => ev.term === state.term);
+    const anchors = (typeof TERM_ANCHORS !== 'undefined' && TERM_ANCHORS[state.term]) || [];
+    const want = (typeof TERM_EVENT_COUNT !== 'undefined' && TERM_EVENT_COUNT[state.term]) || 3;
+
+    /* 1. 锚点事件必出（军训、百团大战、四级、金工实习、方向分流、毕业答辩…） */
+    const picked = [];
+    anchors.forEach((id) => {
+      const ev = pool.find((e) => e.id === id);
+      if (ev) picked.push(ev);
+    });
+
+    /* 2. 其余事件：优先抽「这一轮还没见过的」，见完了再随机，保证多周目不重样 */
+    const seen = loadSeen();
+    const candidates = pool.filter((ev) => picked.indexOf(ev) < 0);
+    const fresh = shuffle(candidates.filter((ev) => seen.indexOf(ev.id) < 0));
+    const used = shuffle(candidates.filter((ev) => seen.indexOf(ev.id) >= 0));
+    const rest = fresh.concat(used);
+    while (picked.length < Math.min(want, pool.length) && rest.length) {
+      picked.push(rest.shift());
+    }
+
+    /* 3. 打乱顺序（锚点也参与打乱，只保证第一个事件是锚点，避免开局是随机支线） */
+    const shuffled = shuffle(picked);
+    const first = picked.find((ev) => anchors.indexOf(ev.id) >= 0);
+    if (first) {
+      const at = shuffled.indexOf(first);
+      if (at > 0) { shuffled.splice(at, 1); shuffled.unshift(first); }
+    }
+    shuffled.forEach((ev) => queue.push(withRiskChoice(ev)));
+
+    /* 4. 社团专属事件：第 1 / 3 / 5 学期各一次 */
     if (state.club) {
       const idx = [0, 2, 4].indexOf(state.term);
       if (idx >= 0 && state.club.events[idx]) {
@@ -758,12 +847,17 @@
         queue.push(Object.assign({}, raw, { clubName: state.club.name, tag: raw.tag }));
       }
     }
-    /* 随机事件：55% 概率插到队列中间 */
+
+    /* 5. 随机事件：70% 概率插到队列中间，同样优先没见过的 */
     const extra = pickRandomEvent();
     if (extra) {
       const at = Math.max(1, Math.floor(queue.length / 2));
-      queue.splice(at, 0, extra);
+      queue.splice(at, 0, withRiskChoice(extra));
     }
+
+    /* 6. 记录本局出场的事件，供下一周目避开 */
+    queue.forEach((ev) => markSeen(ev.id));
+
     state.queue = queue;
     state.step = 0;
   }
@@ -797,9 +891,10 @@
       finishGame();
       return;
     }
+    renderRiskBar();
 
-    const riskLevel = state.risk >= 70 ? '危险' : state.risk >= 40 ? '预警' : '正常';
-    const riskClass = state.risk >= 70 ? 'danger' : state.risk >= 40 ? 'warn' : '';
+    const riskLevel = state.risk >= RISK_WARN ? '危险' : state.risk >= 45 ? '预警' : '正常';
+    const riskClass = state.risk >= RISK_WARN ? 'danger' : state.risk >= 45 ? 'warn' : '';
 
     stage.innerHTML =
       '<div class="term-summary">' +
@@ -810,7 +905,8 @@
         '<div class="summary-risk ' + riskClass + '">' +
           '<span class="sr-label">学业风险</span>' +
           '<span class="sr-track"><i style="width:' + state.risk + '%"></i></span>' +
-          '<span class="sr-value">' + state.risk + ' / 100 · ' + riskLevel + '</span>' +
+          '<span class="sr-value">' + state.risk + ' / 100 · ' + riskLevel +
+            (state.warnings ? ' · 已预警 ' + state.warnings + ' 次' : '') + '</span>' +
         '</div>' +
         '<div class="summary-log">' +
           state.log.filter((l) => l.term === state.term).map((l) =>
@@ -838,6 +934,7 @@
     state.log = [];
     state.flags = {};
     state.risk = 0;
+    state.warnings = 0;
     state.counters = {};
     state.ending = null;
     state.stats = computeStats(state.major.id, state.talents, state.alloc);
@@ -952,15 +1049,20 @@
     if (meta) {
       meta.innerHTML =
         '<span class="em-item">' + icon('medal') + ' 成就 ' + got + ' / ' + total + '</span>' +
-        '<span class="em-item">' + icon('clock') + ' 学业风险 ' + state.risk + ' / 100</span>' +
+        '<span class="em-item">' + icon('clock') + ' 学业风险 ' + state.risk + ' / 100' +
+          (state.warnings ? '（预警 ' + state.warnings + ' 次）' : '') + '</span>' +
         '<span class="em-item">' + icon('route') + ' 经历 ' + state.log.length + ' 个事件</span>';
     }
 
-    const highlights = state.log.filter((l) => l.ok === true || (l.ok === null && l.effects &&
-      Object.values(l.effects).some((v) => v > 0))).slice(-8);
+    /* 回顾：优先挑高光记录；若一条都没有（例如被劝退），就展示全部经历 */
+    let highlights = state.log.filter((l) => l.ok === true || (l.ok === null && l.effects &&
+      Object.values(l.effects).some((v) => v > 0)));
+    if (!highlights.length) highlights = state.log.slice();
+    highlights = highlights.slice(-8);
     $('ending-log').innerHTML = highlights.map((l) =>
       '<li><span class="el-term">' + TERMS[l.term].short + '</span>' +
-      '<span class="el-text">' + l.text + '</span></li>').join('');
+      '<span class="el-text">' + l.text + '</span></li>').join('') ||
+      '<li class="el-empty">这一段还没有留下记录。</li>';
   }
 
   /* ---------- 主题 ---------- */
@@ -1095,6 +1197,7 @@
       state.secret = false;
       state.ending = null;
       state.risk = 0;
+      state.warnings = 0;
       state.counters = {};
       clearSecretMode();
       $('name-form').reset();
@@ -1162,12 +1265,19 @@
     resolveChoice: resolveChoice, finishGame: finishGame, pickEnding: pickEnding,
     rollCheck: rollCheck, stat: stat, addStats: addStats, totalStats: totalStats,
     isSecretName: isSecretName, applySecretMode: applySecretMode,
+    showTermSummary: showTermSummary, nextStep: nextStep, renderEnding: renderEnding,
+    pushLog: pushLog, loadAchievements: loadAchievements,
     /* 成就 / 风险 / 随机事件 */
     achievements: ACHIEVEMENTS, renderAchievements: renderAchievements,
     evaluateAchievements: evaluateAchievements, unlockedCount: unlockedCount,
     checkAchievement: checkAchievement, bumpCounter: bumpCounter,
     addRisk: addRisk, settleRisk: settleRisk, pickRandomEvent: pickRandomEvent,
-    renderRiskBar: renderRiskBar, randomEvents: RANDOM_EVENTS
+    renderRiskBar: renderRiskBar, randomEvents: RANDOM_EVENTS,
+    /* 抽样 / 摆烂选项 */
+    shuffle: shuffle, withRiskChoice: withRiskChoice,
+    riskChoices: (typeof RISK_CHOICES !== 'undefined' ? RISK_CHOICES : {}),
+    termAnchors: (typeof TERM_ANCHORS !== 'undefined' ? TERM_ANCHORS : {}),
+    termEventCount: (typeof TERM_EVENT_COUNT !== 'undefined' ? TERM_EVENT_COUNT : {})
   };
 })();
 
