@@ -5,100 +5,8 @@
   'use strict';
 
   /* ---------------- 曲库 ---------------- */
-  var TRACKS = [
-    {
-      title: '彩虹',
-      artist: '周杰伦',
-      album: '我很忙',
-      src: 'assets/audio/rainbow.mp3',
-      cover: 'assets/img/rainbow-cover.jpg',
-      lyrics: [
-        [13.48, '哪里有彩虹告诉我'],
-        [19.07, '能不能把我的愿望还给我'],
-        [26.36, '为什么天这么安静'],
-        [32.04, '所有的云都跑到我这里'],
-        [38.96, '有没有口罩一个给我'],
-        [44.90, '释怀说了太多就成真不了'],
-        [51.89, '也许时间是一种解药'],
-        [57.56, '也是我现在正服下的毒药'],
-        [64.05, '看不见你的笑 我怎么睡得着'],
-        [70.55, '你的声音这么近我却抱不到'],
-        [77.03, '没有地球太阳还是会绕'],
-        [83.53, '没有理由我也能自己走'],
-        [90.04, '你要离开 我知道很简单'],
-        [96.50, '你说依赖 是我们的阻碍'],
-        [102.99, '就算放开 但能不能别没收我的爱'],
-        [110.25, '当作我最后才明白'],
-        [116.73, '有没有口罩一个给我'],
-        [122.80, '释怀说了太多就成真不了'],
-        [129.71, '也许时间是一种解药'],
-        [135.40, '也是我现在正服下的毒药'],
-        [141.88, '看不见你的笑 我怎么睡得着'],
-        [148.38, '你的声音这么近我却抱不到'],
-        [154.95, '没有地球太阳还是会绕'],
-        [161.34, '没有理由我也能自己走'],
-        [167.79, '你要离开 我知道很简单'],
-        [174.33, '你说依赖 是我们的阻碍'],
-        [180.80, '就算放开 但能不能别没收我的爱'],
-        [188.07, '当作我最后才明白'],
-        [194.59, '看不见你的笑 要我怎么睡得着'],
-        [198.26, '你的声音这么近我却抱不到'],
-        [201.51, '没有地球太阳还是会绕会绕'],
-        [204.72, '没有理由我也能自己走掉'],
-        [207.98, '释怀说了太多就成真不了'],
-        [211.20, '也许时间是一种解药解药'],
-        [214.46, '也是我现在正服下的毒药'],
-        [219.69, '你要离开 我知道很简单'],
-        [226.17, '你说依赖 是我们的阻碍'],
-        [232.73, '就算放开 但能不能别没收我的爱'],
-        [243.26, '当作我最后才明白']
-      ]
-    },
-    {
-      title: '听海',
-      artist: '张惠妹',
-      album: 'Bad Boy',
-      src: 'assets/audio/tinghai.mp3',
-      cover: 'assets/img/tinghai-cover.jpg',
-      lyrics: [
-        [45.21, '写信告诉我今天 海是什么颜色'],
-        [52.91, '夜夜陪着你的海 心情又如何'],
-        [60.28, '灰色是不想说 蓝色是忧郁'],
-        [67.64, '而漂泊的你 狂浪的心'],
-        [72.01, '停在哪里'],
-        [76.13, '写信告诉我今夜 你想要梦什么'],
-        [83.84, '梦里外的我是否 都让你无从选择'],
-        [91.46, '我揪着一颗心 整夜都闭不了眼睛'],
-        [99.16, '为何你明明动了情 却又不靠近'],
-        [107.53, '听 海哭的声音'],
-        [114.62, '叹惜着谁又被伤了心'],
-        [118.38, '却还不清醒'],
-        [123.59, '一定不是我 至少我很冷静'],
-        [130.03, '可是泪水 就连泪水也都不相信'],
-        [138.88, '听 海哭的声音'],
-        [145.44, '这片海未免也太多情'],
-        [149.35, '悲泣到天明'],
-        [154.49, '写封信给我 就当最后约定'],
-        [161.09, '说你在离开我的时候'],
-        [164.83, '是怎样的心情'],
-        [196.14, '写信告诉我今夜 你想要梦什么'],
-        [204.01, '梦里外的我是否 都让你无从选择'],
-        [211.46, '我揪着一颗心 整夜都闭不了眼睛'],
-        [219.20, '为何你明明动了情 却又不靠近'],
-        [227.80, '听 海哭的声音'],
-        [234.69, '叹惜着谁又被伤了心'],
-        [238.42, '却还不清醒'],
-        [243.54, '一定不是我 至少我很冷静'],
-        [250.16, '可是泪水 就连泪水也都不相信'],
-        [258.88, '听 海哭的声音'],
-        [265.57, '这片海未免也太多情'],
-        [269.17, '悲泣到天明'],
-        [274.65, '写封信给我 就当最后约定'],
-        [281.07, '说你在离开我的时候'],
-        [285.19, '是怎样的心情']
-      ]
-    }
-  ];
+  /* 歌单在 js/tracks.js（window.HRF_TRACKS）里，改歌就改那个文件。 */
+  var TRACKS = (window.HRF_TRACKS || []).slice();
 
   var $  = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -130,7 +38,8 @@
   var trackTitle = $('#trackTitle');
   var trackMeta  = $('#trackMeta');
   var coverImg   = $('#coverImg');
-  var trackRows  = $$('.track-row');
+  var tracklistEl = $('#tracklist');
+  var trackRows  = [];
   var toastEl    = $('#toast');
 
   var current = 0;
@@ -217,13 +126,60 @@
     }
   }
 
-  trackRows.forEach(function (row) {
-    row.addEventListener('click', function () {
-      var i = Number(row.getAttribute('data-track'));
-      if (i === current) { toggle(); return; }
-      loadTrack(i, true);
+  var trackFilter = $('#trackFilter');
+  var trackEmpty  = $('#trackEmpty');
+  var filterText  = '';
+
+  function matchTrack(t) {
+    if (!filterText) return true;
+    var hay = (t.title + ' ' + t.artist + ' ' + t.album).toLowerCase();
+    return hay.indexOf(filterText) >= 0;
+  }
+
+  function renderTracklist() {
+    if (!tracklistEl) return;
+    tracklistEl.innerHTML = '';
+    trackRows = [];
+    var shown = 0;
+    TRACKS.forEach(function (t, i) {
+      if (!matchTrack(t)) return;
+      shown++;
+      var li = document.createElement('li');
+      var b = document.createElement('button');
+      b.className = 'track-row' + (i === current ? ' is-active' : '');
+      b.type = 'button';
+      b.setAttribute('data-track', String(i));
+      b.setAttribute('aria-label', '播放 ' + t.title);
+      b.innerHTML =
+        '<span class="track-num">' + (i < 9 ? '0' : '') + (i + 1) + '</span>' +
+        '<span class="track-main">' +
+          '<span class="track-name">' + esc(t.title) + '</span>' +
+          '<span class="track-sub">' + esc(t.artist + ' · ' + t.album) + '</span>' +
+        '</span>' +
+        '<span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>';
+      b.addEventListener('click', function () {
+        if (i === current) { toggle(); return; }
+        loadTrack(i, true);
+      });
+      li.appendChild(b);
+      tracklistEl.appendChild(li);
+      trackRows.push(b);
     });
-  });
+    if (trackEmpty) trackEmpty.hidden = shown > 0;
+    var countEl = $('#trackCount');
+    if (countEl) {
+      countEl.textContent = filterText
+        ? shown + ' / ' + TRACKS.length + ' 首'
+        : TRACKS.length + ' 首';
+    }
+  }
+
+  if (trackFilter) {
+    trackFilter.addEventListener('input', function () {
+      filterText = trackFilter.value.trim().toLowerCase();
+      renderTracklist();
+    });
+  }
 
   /* ---------------- 播放状态 UI ---------------- */
   var isPlaying = false;
@@ -268,10 +224,8 @@
   audio.addEventListener('play',  function () { paintPlayState(true);  });
   audio.addEventListener('pause', function () { paintPlayState(false); });
 
-  /* 播放结束：单曲循环 or 下一首。
-     打歌时不接管（谱面没走完时由 game.js 负责结算）。 */
+  /* 播放结束：单曲循环 or 下一首 */
   audio.addEventListener('ended', function () {
-    if (document.body.classList.contains('is-gaming')) return;
     if (looping) { audio.currentTime = 0; play(); return; }
     if (current < TRACKS.length - 1) loadTrack(current + 1, true);
     else paintPlayState(false);
@@ -792,12 +746,12 @@
     var t = e.target;
     var tag = (t && t.tagName) || '';
     if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'BUTTON' || tag === 'A' || tag === 'SELECT') return;
-    if (document.body.classList.contains('is-gaming')) return;
     e.preventDefault();
     toggle();
   });
 
   /* ---------------- 初始化 ---------------- */
+  renderTracklist();
   paintTrack();
   paintPlayState(false);
   syncLyrics(0);
@@ -813,10 +767,7 @@
     toggle: toggle,
     loadTrack: loadTrack,
     getCurrent: function () { return current; },
-    setCurrent: function (i) { current = i; },
     isPlaying: function () { return isPlaying; },
-    markStarted: function () { started = true; paintMini(); },
-    setMusicVisible: function (v) { musicVisible = v; paintMini(); },
     theme: function () { return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'; }
   };
 })();

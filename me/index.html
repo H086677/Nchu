@@ -16,9 +16,9 @@
 })();
 </script>
 <title>黄锐锋 · 个人主页</title>
-<meta name="description" content="黄锐锋的个人网站 — 音乐盒、歌词节奏游戏、人生模拟器与联系方式。">
+<meta name="description" content="黄锐锋的个人网站 — 音乐盒、我喜欢的游戏、人生模拟器与联系方式。">
 <meta property="og:title" content="黄锐锋 · 个人主页">
-<meta property="og:description" content="音乐盒 · 歌词节奏游戏 · 人生模拟器 · 联系方式">
+<meta property="og:description" content="音乐盒 · 我喜欢的游戏 · 人生模拟器 · 联系方式">
 <meta property="og:image" content="assets/img/avatar.jpg">
 <meta property="og:type" content="website">
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -37,7 +37,7 @@
       <nav class="nav" aria-label="页面导航">
         <a href="#about">关于</a>
         <a href="#music">音乐</a>
-        <a href="#game">音游</a>
+        <a href="#games">游戏</a>
         <a href="#sim">模拟</a>
         <a href="#contact">联系</a>
       </nav>
@@ -63,14 +63,15 @@
       </div>
 
       <p class="lede">
-        喜欢听歌，喜欢周杰伦，也喜欢张惠妹。这里是我的小站 ——
-        有能放歌的音乐盒，有一款踩着歌词敲拍子的音游，还有一场随时可以开始的人生。
+        喜欢听歌，喜欢周杰伦，也喜欢方大同。这里是我的小站 ——
+        有一个装满周杰伦和方大同的音乐盒，有我自己喜欢的几款游戏，
+        还有一场随时可以开始的人生。
       </p>
 
       <ul class="chips">
         <li>南昌航空大学</li>
         <li>在校学生</li>
-        <li>周杰伦 · 张惠妹</li>
+        <li>周杰伦 · 方大同</li>
       </ul>
 
       <div class="profile-actions">
@@ -78,8 +79,8 @@
           <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           <span>播放音乐</span>
         </button>
-        <a class="btn btn-line" href="#game">
-          <span>玩音游</span>
+        <a class="btn btn-line" href="#games">
+          <span>看看游戏</span>
           <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m0 0-5-5m5 5-5 5"/></svg>
         </a>
       </div>
@@ -96,7 +97,7 @@
       </div>
       <div class="fact-row">
         <span class="fact-label">常听</span>
-        <span class="fact-value">周杰伦 · 张惠妹</span>
+        <span class="fact-value">周杰伦 · 方大同</span>
       </div>
     </div>
   </section>
@@ -108,7 +109,7 @@
         <p class="kicker">MUSIC</p>
         <h2 class="section-title">音乐盒</h2>
       </div>
-      <p class="section-desc">两首歌，循环着听。点歌名切换。</p>
+      <p class="section-desc">周杰伦与方大同，33 首。点歌名切换，也可以搜。</p>
     </div>
 
     <div class="player-grid">
@@ -117,30 +118,14 @@
       <article class="card playlist-card reveal">
         <div class="card-head">
           <h3>播放列表</h3>
-          <span class="card-count">2 首</span>
+          <span class="card-count" id="trackCount">33 首</span>
         </div>
-        <ul class="tracklist" id="tracklist">
-          <li>
-            <button class="track-row is-active" type="button" data-track="0" aria-label="播放 彩虹">
-              <span class="track-num">01</span>
-              <span class="track-main">
-                <span class="track-name">彩虹</span>
-                <span class="track-sub">周杰伦 · 我很忙</span>
-              </span>
-              <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
-            </button>
-          </li>
-          <li>
-            <button class="track-row" type="button" data-track="1" aria-label="播放 听海">
-              <span class="track-num">02</span>
-              <span class="track-main">
-                <span class="track-name">听海</span>
-                <span class="track-sub">张惠妹 · Bad Boy</span>
-              </span>
-              <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
-            </button>
-          </li>
-        </ul>
+        <div class="track-search">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+          <input id="trackFilter" type="search" placeholder="搜歌名 / 歌手" aria-label="搜索歌曲" autocomplete="off">
+        </div>
+        <ul class="tracklist" id="tracklist"></ul>
+        <p class="track-empty" id="trackEmpty" hidden>没找到这首歌，换个词试试。</p>
       </article>
 
       <!-- 正在播放 -->
@@ -204,97 +189,17 @@
     </div>
   </section>
 
-  <!-- ================= 歌词节奏游戏 ================= -->
-  <section class="section" id="game">
+  <!-- ================= 我喜欢的游戏 ================= -->
+  <section class="section" id="games">
     <div class="section-head reveal">
       <div>
-        <p class="kicker">RHYTHM</p>
-        <h2 class="section-title">歌词节奏游戏</h2>
+        <p class="kicker">GAMES</p>
+        <h2 class="section-title">我喜欢的游戏</h2>
       </div>
-      <p class="section-desc">音符踩着歌词落下，在判定线敲准它。</p>
+      <p class="section-desc">点进去有每一款的详细页面，内容还在慢慢补。</p>
     </div>
 
-    <article class="card game-card reveal" id="gameCard">
-
-      <!-- 开始 -->
-      <div class="game-panel game-start" id="gameStart">
-        <div class="game-intro">
-          <h3>挑一首，跟着歌词打拍子</h3>
-          <p>四条轨道对应 <kbd>D</kbd> <kbd>F</kbd> <kbd>J</kbd> <kbd>K</kbd>，手机直接点轨道。音符踩在歌词上，越准分越高。</p>
-        </div>
-
-        <div class="game-songs" id="gameSongs" role="radiogroup" aria-label="选择曲目"></div>
-
-        <div class="game-launch">
-          <button class="btn btn-solid" id="gameBegin" type="button">
-            <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            <span>开始游戏</span>
-          </button>
-          <span class="game-hint">开始会从头播放这首歌</span>
-        </div>
-
-        <div class="game-records" id="gameRecords"></div>
-      </div>
-
-      <!-- 游玩 -->
-      <div class="game-panel game-play" id="gamePlay" hidden>
-        <div class="game-hud">
-          <div class="hud-cell">
-            <span class="hud-label">分数</span>
-            <span class="hud-value" id="hudScore">0</span>
-          </div>
-          <div class="hud-cell">
-            <span class="hud-label">连击</span>
-            <span class="hud-value" id="hudCombo">0</span>
-          </div>
-          <div class="hud-cell hud-acc">
-            <span class="hud-label">准确率</span>
-            <span class="hud-value" id="hudAcc">100%</span>
-          </div>
-          <button class="icon-btn game-quit" id="gameQuit" type="button" title="退出" aria-label="退出游戏">
-            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
-          </button>
-        </div>
-
-        <div class="game-field" id="gameField">
-          <div class="game-lanes" id="gameLanes">
-            <div class="lane" data-lane="0"><span class="lane-key">D</span></div>
-            <div class="lane" data-lane="1"><span class="lane-key">F</span></div>
-            <div class="lane" data-lane="2"><span class="lane-key">J</span></div>
-            <div class="lane" data-lane="3"><span class="lane-key">K</span></div>
-          </div>
-          <div class="game-judge-line" id="gameJudgeLine" aria-hidden="true"></div>
-          <div class="game-notes" id="gameNotes" aria-hidden="true"></div>
-          <div class="game-lyric" id="gameLyric" aria-hidden="true"></div>
-          <div class="game-callout" id="gameCallout" aria-hidden="true"></div>
-          <div class="game-pause" id="gamePause" hidden>
-            <p>已暂停</p>
-            <button class="btn btn-solid" id="gameResume" type="button">继续</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- 结算 -->
-      <div class="game-panel game-result" id="gameResult" hidden>
-        <div class="result-grade" id="resultGrade">S</div>
-        <div class="result-main">
-          <p class="result-song" id="resultSong">彩虹</p>
-          <p class="result-score" id="resultScore">0</p>
-          <ul class="result-stats">
-            <li><span>准确率</span><b id="resultAcc">0%</b></li>
-            <li><span>最大连击</span><b id="resultCombo">0</b></li>
-            <li><span>Perfect</span><b id="resultPerfect">0</b></li>
-            <li><span>Good</span><b id="resultGood">0</b></li>
-            <li><span>Miss</span><b id="resultMiss">0</b></li>
-          </ul>
-          <div class="result-actions">
-            <button class="btn btn-solid" id="resultAgain" type="button">再来一次</button>
-            <button class="btn btn-line" id="resultBack" type="button">换一首</button>
-          </div>
-        </div>
-      </div>
-
-    </article>
+    <div class="game-grid" id="gameGrid"></div>
   </section>
 
   <!-- ================= 人生模拟器 ================= -->
@@ -402,7 +307,7 @@
 <footer class="foot">
   <div class="wrap foot-in">
     <p>© <span id="year">2026</span> 黄锐锋 · HTML / CSS / JS 手写 · 托管于 GitHub Pages</p>
-    <p class="foot-sub">BGM：周杰伦《彩虹》、张惠妹《听海》</p>
+    <p class="foot-sub">曲库：周杰伦 21 首 · 方大同 11 首 · 张惠妹 1 首</p>
   </div>
 </footer>
 
@@ -428,7 +333,8 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="js/config.js"></script>
+<script src="js/tracks.js"></script>
 <script src="js/main.js"></script>
-<script src="js/game.js"></script>
+<script src="js/games.js"></script>
 </body>
 </html>
