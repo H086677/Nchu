@@ -550,21 +550,34 @@
   }
 
   /* ---------------- 滚动入场动画 ---------------- */
-  var reveals = $$('.reveal');
+  var revObs = null;
+
+  function observeReveals(list) {
+    list.forEach(function (el, i) {
+      if (el.classList.contains('in') || el.getAttribute('data-revealed')) return;
+      el.setAttribute('data-revealed', '1');
+      el.style.transitionDelay = Math.min(i * 40, 220) + 'ms';
+      revObs.observe(el);
+    });
+  }
+
+  function refreshReveals() {
+    var list = $$('.reveal:not(.in)');
+    if (revObs) observeReveals(list);
+    else list.forEach(function (el) { el.classList.add('in'); });
+  }
+
   if ('IntersectionObserver' in window) {
-    var revObs = new IntersectionObserver(function (entries) {
+    revObs = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
         en.target.classList.add('in');
         revObs.unobserve(en.target);
       });
     }, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
-    reveals.forEach(function (el, i) {
-      el.style.transitionDelay = Math.min(i * 40, 220) + 'ms';
-      revObs.observe(el);
-    });
+    observeReveals($$('.reveal'));
   } else {
-    reveals.forEach(function (el) { el.classList.add('in'); });
+    $$('.reveal').forEach(function (el) { el.classList.add('in'); });
   }
 
   /* ---------------- Toast ---------------- */
@@ -768,6 +781,7 @@
     loadTrack: loadTrack,
     getCurrent: function () { return current; },
     isPlaying: function () { return isPlaying; },
+    refreshReveals: refreshReveals,
     theme: function () { return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'; }
   };
 })();

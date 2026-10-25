@@ -189,6 +189,8 @@
         '</div>';
       grid.appendChild(a);
     });
+    /* 卡片是后生成的，入场动画的观察器要重新挂一次 */
+    if (window.HRF && window.HRF.refreshReveals) window.HRF.refreshReveals();
   }
 
   /* ---------------- 详情页 ---------------- */
