@@ -63,7 +63,7 @@ python -m http.server 8000
 ```
 
 注意：`python -m http.server` **不支持 Range 请求**，音频可以播放但进度条无法拖动跳转。
-需要拖动跳转时用支持 Range 的服务器（例如 `npx serve`，或仓库里的 `.dsh-pilot/range-server.js`）：
+需要拖动跳转时用支持 Range 的服务器（例如 `npx serve`，或本地脚本 `.dsh-pilot/range-server.js`，该脚本仅本地使用、不随站点部署）：
 
 ```bash
 node .dsh-pilot/range-server.js . 8793
