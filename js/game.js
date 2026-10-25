@@ -539,12 +539,12 @@
         state.flags['repeat_offender'] = true;
         return 'expelled';
       }
-      addStats({ 笃学: -1 });
+      addStats({ 学习: -1 });
       pushLog({
         term: state.term, title: '学业预警',
         text: '本学期不及格学分超标，学院下发了第 ' + state.warnings + ' 次学业预警。' +
           (state.warnings >= RISK_MAX_WARN - 1 ? '这是最后一次机会了。' : '再这样下去就要退学了。'),
-        effects: { 笃学: -1 }
+        effects: { 学习: -1 }
       });
       toast('收到第 ' + state.warnings + ' 次学业预警 · 累计 3 次将被劝退');
     }
@@ -667,8 +667,8 @@
           const id = btn.dataset.club;
           if (id === 'none') {
             state.club = null;
-            addStats({ 笃学: 1 });
-            pushLog({ term: state.term, title: '百团大战', text: '你一张报名表都没交，把时间留给了图书馆。', effects: { 笃学: 1 } });
+            addStats({ 学习: 1 });
+            pushLog({ term: state.term, title: '百团大战', text: '你一张报名表都没交，把时间留给了图书馆。', effects: { 学习: 1 } });
             renderStatPanel();
             nextStep();
             return;
@@ -964,41 +964,41 @@
 
     const aviationScore =
       (f.aviation_job ? 3 : 0) + (f.intern_ok ? 2 : 0) + (f.network ? 1 : 0) +
-      (f.elite ? 1 : 0) + (stat('守正') >= 12 ? 1 : 0) + (stat('力行') >= 12 ? 1 : 0);
+      (f.elite ? 1 : 0) + (stat('品行') >= 12 ? 1 : 0) + (stat('动手') >= 12 ? 1 : 0);
 
     const researchScore =
       (f.postgrad ? 3 : 0) + (f.postgrad_exam ? 2 : 0) + (f.mcm_award ? 2 : 0) +
-      (f.challenge_award ? 1 : 0) + (stat('笃学') >= 14 ? 2 : 0);
+      (f.challenge_award ? 1 : 0) + (stat('学习') >= 14 ? 2 : 0);
 
     const industryScore =
       (f.job ? 2 : 0) + (f.intern_ok ? 1 : 0) + (f.metalwork ? 1 : 0) +
-      (stat('力行') >= 13 ? 1 : 0);
+      (stat('动手') >= 13 ? 1 : 0);
 
     const legendScore =
-      (stat('笃学') >= 18 ? 2 : 0) + (stat('力行') >= 18 ? 2 : 0) +
+      (stat('学习') >= 18 ? 2 : 0) + (stat('动手') >= 18 ? 2 : 0) +
       (f.mcm_award ? 1 : 0) + (f.challenge_award ? 1 : 0) + (f.elite ? 1 : 0) +
       (f.paper ? 1 : 0);
 
     const entrepreneurScore =
       (f.startup ? 3 : 0) + (f.parttime ? 1 : 0) + (f.network ? 1 : 0) +
-      (stat('求新') >= 14 ? 2 : 0);
+      (stat('创意') >= 14 ? 2 : 0);
 
     const loveScore =
       (f.love ? 3 : 0) + (f.long_distance ? 2 : 0) + (f.heartbreak ? -2 : 0);
 
     const examScore =
-      (f.postgrad_exam ? 3 : 0) + (f.civil ? 2 : 0) + (stat('笃学') >= 13 ? 1 : 0);
+      (f.postgrad_exam ? 3 : 0) + (f.civil ? 2 : 0) + (stat('学习') >= 13 ? 1 : 0);
 
     const abroadScore =
-      (f.abroad ? 3 : 0) + (f.cet6 ? 1 : 0) + (stat('笃学') >= 13 ? 1 : 0);
+      (f.abroad ? 3 : 0) + (f.cet6 ? 1 : 0) + (stat('学习') >= 13 ? 1 : 0);
 
     /* 强制事件已经处理过，这里只处理自然达成 */
     if (legendScore >= 5) return ENDINGS.find((e) => e.id === 'legend');
     if (entrepreneurScore >= 4) return ENDINGS.find((e) => e.id === 'entrepreneur');
     if (loveScore >= 5) return ENDINGS.find((e) => e.id === 'love');
     if (abroadScore >= 5) return ENDINGS.find((e) => e.id === 'abroad');
-    if (examScore >= 5 && stat('笃学') < 16) return ENDINGS.find((e) => e.id === 'postgrad_exam');
-    if (f.paper && stat('笃学') >= 14) return ENDINGS.find((e) => e.id === 'research');
+    if (examScore >= 5 && stat('学习') < 16) return ENDINGS.find((e) => e.id === 'postgrad_exam');
+    if (f.paper && stat('学习') >= 14) return ENDINGS.find((e) => e.id === 'research');
 
     const best = Math.max(aviationScore, researchScore, industryScore);
     if (best >= 4 && aviationScore === best) return ENDINGS.find((e) => e.id === 'aviation');
